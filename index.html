@@ -77,6 +77,8 @@
   .bar{display:flex;gap:calc(var(--u)*.4)}
   .bar i{flex:1;background:var(--off);border-radius:calc(var(--u)*.2)}
   .bar i.on{background:var(--vert);box-shadow:0 0 calc(var(--u)*.8) color-mix(in srgb,var(--vert) 70%,transparent)}
+  .bar-ambre i.on{background:var(--ambre);box-shadow:0 0 calc(var(--u)*.8) color-mix(in srgb,var(--ambre) 70%,transparent)}
+  .bar-rouge i.on{background:var(--rouge)}.bar-bleu i.on{background:var(--bleu)}
   body:is(.th-dash,.th-gare) .bar i.on{box-shadow:none}
   .days{display:flex;gap:calc(var(--u)*.6)}
   .days b{display:grid;place-items:center;border:calc(var(--u)*.2) solid var(--off);color:var(--dim);border-radius:calc(var(--u)*.4);font-weight:inherit}
@@ -183,6 +185,7 @@
 </div>
 
 <script src="config.js"></script>
+<script src="modules.js"></script>
 <script>
 const $ = id => document.getElementById(id);
 const CFG = window.CRC_CONFIG || {};
@@ -260,11 +263,13 @@ const WMO = {0:"Grand soleil",1:"Plutôt dégagé",2:"Quelques nuages",3:"Couver
   95:"Orage",96:"Orage et grêle",99:"Gros orage"};
 async function loadMeteo(){
   try{
-    const u = `https://api.open-meteo.com/v1/forecast?latitude=${S.lat}&longitude=${S.lon}&current=temperature_2m,apparent_temperature,weather_code,wind_speed_10m&daily=temperature_2m_max,temperature_2m_min&forecast_days=1&timezone=auto`;
-    const j = await (await fetch(u)).json();
+    const u = `https://api.open-meteo.com/v1/forecast?latitude=${S.lat}&longitude=${S.lon}&current=temperature_2m,apparent_temperature,weather_code,wind_speed_10m&daily=weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset&forecast_days=4&timezone=auto`;
+    const j = await (await fetch(u)).json(), D = j.daily;
     meteo = { t:Math.round(j.current.temperature_2m), r:Math.round(j.current.apparent_temperature),
       v:Math.round(j.current.wind_speed_10m), txt:WMO[j.current.weather_code]||"Météo",
-      min:Math.round(j.daily.temperature_2m_min[0]), max:Math.round(j.daily.temperature_2m_max[0]) };
+      min:Math.round(D.temperature_2m_min[0]), max:Math.round(D.temperature_2m_max[0]),
+      lever: hm(D.sunrise[0]), coucher: hm(D.sunset[0]),
+      jours: D.time.map((t,i)=>({ d:new Date(t+"T12:00:00"), code:D.weather_code[i], min:Math.round(D.temperature_2m_min[i]), max:Math.round(D.temperature_2m_max[i]) })) };
   }catch(e){ meteo = null; }
   render();
 }
@@ -356,32 +361,19 @@ function row(badge, color, main, side=""){
   return `<div class="row fade"><div class="badge glow c-${color}"><span>${esc(badge)}</span></div><div class="main glow c-${color}"><span class="txt">${main}</span></div>${side?`<div class="side glow">${side}</div>`:""}</div>`;
 }
 function render(){
-  const d = new Date(), out = [];
+  const d = new Date();
   $('titreTxt').textContent = S.titre || "CRC";
-  if(S.blocs.meteo){
-    out.push(meteo
-      ? row("Météo","ambre", `${esc(meteo.txt)} ${meteo.t}°`, `${esc(S.ville)} · ${meteo.min}° / ${meteo.max}° · vent ${meteo.v} km/h`)
-      : row("Météo","ambre","Chargement…", esc(S.ville)));
-  }
-  if(S.blocs.fete){ const f = fete(d); if(f) out.push(row("Fête","blanc", esc(f))); }
-  if(S.blocs.semaine){
-    const w = semaine(d), n = LAY==="carrousel" ? 20 : 30, on = Math.round(w.pct/100*n);
-    const bar = `<div class="bar">${Array.from({length:n},(_,i)=>`<i class="${i<on?'on':''}"></i>`).join("")}</div>`;
-    const days = `<div class="days">${["L","M","M","J","V","S"].map((l,i)=>`<b class="${w.dow===0||i+1<w.dow?'done':i+1===w.dow?'now':''}">${l}</b>`).join("")}</div>`;
-    out.push(`<div class="row fade"><div class="badge glow c-vert"><span>Semaine</span></div><div class="main glow c-vert" style="overflow:visible;white-space:normal"><span>${Math.round(w.pct)} % · ${esc(w.label)}</span>${bar}</div><div class="side">${days}</div></div>`);
-  }
-  const msgs = (S.messages||[]).filter(m=>m.actif!==false && (m.texte||"").trim());
+  let out = buildRows(d);
   if(LAY==="carrousel"){
-    msgs.forEach(m => out.push(row(m.badge||"Info", m.couleur||"ambre", esc(m.texte))));
     window.__pages = out.length; page = page % Math.max(1,out.length);
-    $('dots').innerHTML = out.length>1 ? out.map((_,i)=>`<i class="${i===page?'on':''}"></i>`).join("") : "";
-    out.splice(0, out.length, out[page] || "");
+    $('dots').innerHTML = out.length>1 && out.length<=24 ? out.map((_,i)=>`<i class="${i===page?'on':''}"></i>`).join("") : "";
+    out = [out[page] || ""];
   }else{
-    $('dots').innerHTML = "";
-    const libres = Math.max(1, 6 - out.length);
-    const pages = Math.max(1, Math.ceil(msgs.length/libres));
+    const par = Math.max(1, Math.min(12, +S.lignes || 5));
+    const pages = Math.max(1, Math.ceil(out.length/par));
     page = page % pages; window.__pages = pages;
-    msgs.slice(page*libres, page*libres+libres).forEach(m => out.push(row(m.badge||"Info", m.couleur||"ambre", esc(m.texte))));
+    $('dots').innerHTML = "";
+    out = out.slice(page*par, page*par+par);
   }
   $('rows').innerHTML = out.join("");
   requestAnimationFrame(fitTexts);
@@ -420,6 +412,8 @@ layout(); tick(); setInterval(tick, 1000);
   if(window.parent !== window) PREVIEW = new URLSearchParams(location.search).has("apercu");
   if(!PREVIEW) await loadData();
   if(!meteo) loadMeteo();
+  const annexes = async () => { await Promise.all([loadVacances(), loadHistoire()]); render(); };
+  annexes(); setInterval(annexes, 60*60*1000);
   buildTicker(); render();
   setInterval(loadData, 60*1000);
   setInterval(loadMeteo, 10*60*1000);

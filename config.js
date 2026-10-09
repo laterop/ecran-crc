@@ -29,7 +29,17 @@ window.CRC_DEFAULTS = {
   lon: 3.8767,
   ouverture: "08:30",
   fermeture: "18:30",
-  blocs: { meteo: true, fete: true, semaine: true, funfacts: true },
+  blocs: { meteo: true, previsions: true, fete: true, anniv: true, rebours: true, objectif: false, semaine: true,
+           feries: true, vacances: true, soleil: true, citation: true, histoire: true, messages: true, funfacts: true },
+  ordre: ["meteo","previsions","fete","anniv","rebours","objectif","semaine","feries","vacances","soleil","citation","histoire","messages"],
+  lignes: 5,
+  anniversaires: [],
+  anniv_avance: 3,
+  rebours: [
+    { titre: "Noël", date: "2026-12-25", afficher: 60, couleur: "rouge" }
+  ],
+  objectif: { titre: "Objectif QS", valeur: 0, cible: 90, unite: " %" },
+  citations_perso: [],
   messages: [
     { badge: "Info", texte: "Bienvenue sur l'écran du CRC", couleur: "ambre", actif: true },
     { badge: "Info", texte: "Pensez à faire une pause toutes les heures", couleur: "vert", actif: true }

@@ -21,8 +21,12 @@ L'admin enregistre directement dans `data.json` via l'API GitHub. Il faut une cl
 3. Permissions, Repository : **Contents, Read and write**
 4. Colle la clé sur la page admin, elle reste dans ce navigateur seulement
 
-L'écran relit `data.json` toutes les 2 minutes.
+L'écran relit `data.json` toutes les minutes et se recharge à chaque enregistrement.
 
 ## Apparence
 
 Tout se règle dans l'admin : style, disposition (carrousel ou liste), résolution (auto, tuile 435 × 430, HD, Full HD, vertical, personnalisée), taille du texte, cadre façon carte et horloge. Un aperçu en direct montre le rendu avant d'enregistrer.
+
+## Modules
+
+Météo, prévisions 3 jours, fête du jour, anniversaires, comptes à rebours, objectif du jour, avancement de la semaine, jours fériés et ponts, vacances scolaires zone C (API data.education.gouv.fr), soleil et lune, citation du jour, éphéméride (Wikipédia), messages. Chacun s'active et se range dans l'admin. Le code est dans `modules.js`.
