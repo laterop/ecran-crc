@@ -17,13 +17,13 @@
   "funfacts_perso": [],
   "vitesse": 85,
   "rotation": 10,
-  "updated_at": "2026-10-09T09:48:52.487Z",
+  "updated_at": "2026-10-09T09:58:35.972Z",
   "style": "gare",
   "disposition": "auto",
   "resolution": "auto",
   "res_w": 435,
   "res_h": 430,
-  "taille": 115,
+  "taille": 140,
   "cadre": false,
   "horloge": true
 }
