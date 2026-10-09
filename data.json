@@ -9,14 +9,14 @@
   "ouverture": "07:00",
   "fermeture": "20:30",
   "blocs": {
-    "meteo": false,
+    "meteo": true,
     "fete": true,
     "semaine": true,
-    "funfacts": false
+    "funfacts": true
   },
   "messages": [],
   "funfacts_perso": [],
   "vitesse": 60,
   "rotation": 10,
-  "updated_at": "2026-10-09T09:21:28.643Z"
+  "updated_at": "2026-10-09T09:21:52.188Z"
 }
