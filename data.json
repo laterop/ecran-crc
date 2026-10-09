@@ -6,10 +6,10 @@
   "ouverture": "08:30",
   "fermeture": "18:30",
   "blocs": {
-    "meteo": true,
+    "meteo": false,
     "fete": true,
-    "semaine": true,
-    "funfacts": true
+    "semaine": false,
+    "funfacts": false
   },
   "messages": [
     {
@@ -25,5 +25,5 @@
   "sous_titre": "Aujourd'hui",
   "affichage": "auto",
   "reload": null,
-  "updated_at": "2026-10-09T09:09:47.146Z"
+  "updated_at": "2026-10-09T09:10:35.302Z"
 }
