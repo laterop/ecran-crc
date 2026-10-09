@@ -6,10 +6,10 @@
   "cadre": false,
   "horloge": true,
   "taille": 160,
-  "resolution": "auto",
+  "resolution": "435x430",
   "res_w": 435,
   "res_h": 430,
-  "reload": 1791543484082,
+  "reload": 1791543553259,
   "ville": "Montpellier",
   "lat": 43.6108,
   "lon": 3.8767,
@@ -34,5 +34,5 @@
   ],
   "vitesse": 40,
   "rotation": 10,
-  "updated_at": "2026-10-09T10:58:04.082Z"
+  "updated_at": "2026-10-09T10:59:13.259Z"
 }
