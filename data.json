@@ -9,7 +9,7 @@
   "resolution": "auto",
   "res_w": 435,
   "res_h": 430,
-  "reload": 1791541085242,
+  "reload": 1791541320293,
   "ville": "Montpellier",
   "lat": 43.6108,
   "lon": 3.8767,
@@ -32,11 +32,13 @@
       "badge": "Incroyable",
       "texte": "Oui je peux écrire ce que je veux",
       "couleur": "ambre",
-      "actif": true
+      "actif": false
     }
   ],
-  "funfacts_perso": [],
+  "funfacts_perso": [
+    "Le dauphin dort avec un seul œil ouvert pour surveiller ce qui l'entoure et respirer."
+  ],
   "vitesse": 40,
   "rotation": 10,
-  "updated_at": "2026-10-09T10:18:05.242Z"
+  "updated_at": "2026-10-09T10:22:00.293Z"
 }
