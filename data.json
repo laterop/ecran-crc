@@ -1,7 +1,7 @@
 {
   "titre": "CRC MONTPELLIER",
   "sous_titre": "Aujourd'hui",
-  "reload": 1791538304982,
+  "reload": 1791539332487,
   "ville": "Montpellier",
   "lat": 43.6108,
   "lon": 3.8767,
@@ -15,15 +15,15 @@
   },
   "messages": [],
   "funfacts_perso": [],
-  "vitesse": 60,
+  "vitesse": 85,
   "rotation": 10,
-  "updated_at": "2026-10-09T09:31:44.982Z",
+  "updated_at": "2026-10-09T09:48:52.487Z",
   "style": "gare",
   "disposition": "auto",
-  "resolution": "435x430",
+  "resolution": "auto",
   "res_w": 435,
   "res_h": 430,
-  "taille": 160,
-  "cadre": true,
-  "horloge": false
+  "taille": 115,
+  "cadre": false,
+  "horloge": true
 }
