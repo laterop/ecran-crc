@@ -9,7 +9,7 @@
   "resolution": "auto",
   "res_w": 435,
   "res_h": 430,
-  "reload": 1791543620908,
+  "reload": 1791545971931,
   "ville": "Montpellier",
   "lat": 43.6108,
   "lon": 3.8767,
@@ -32,23 +32,23 @@
       "badge": "Trafic",
       "texte": "Réseau TANGO : Perturbations habituelle",
       "couleur": "ambre",
-      "actif": true
+      "actif": false
     },
     {
       "badge": "Trafic",
       "texte": "Réseau Sankéo : Perturbations en cours ",
       "couleur": "rouge",
-      "actif": true
+      "actif": false
     },
     {
       "badge": "Trafic",
       "texte": "Réseau SNCF: Normal",
       "couleur": "vert",
-      "actif": true
+      "actif": false
     }
   ],
   "funfacts_perso": [],
   "vitesse": 40,
   "rotation": 10,
-  "updated_at": "2026-10-09T11:00:20.908Z"
+  "updated_at": "2026-10-09T11:39:31.931Z"
 }
