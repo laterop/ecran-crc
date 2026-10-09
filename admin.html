@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Admin écran CRC</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Doto:wght@900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0b0b0c;--card:#141416;--line:#26262a;--ink:#f2efe6;--dim:#9a978f;--ambre:#ffb21e;--vert:#48ff72;--rouge:#ff3d3d;--bleu:#3fb8ff;--blanc:#f2efe6}
+  *{box-sizing:border-box;margin:0;padding:0}
+  [hidden]{display:none!important}
+  input[type=range]{accent-color:var(--ambre);padding:0}
+  body{background:var(--bg);color:var(--ink);font:15px/1.5 Inter,system-ui,sans-serif;min-height:100vh}
+  .led{font-family:Doto,monospace;font-weight:900;color:var(--ambre);text-shadow:0 0 8px rgba(255,178,30,.5);letter-spacing:.08em}
+  header{position:sticky;top:0;z-index:5;background:rgba(11,11,12,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:14px 20px;display:flex;align-items:center;gap:14px}
+  header h1{font-size:22px}
+  header .sp{flex:1}
+  main{max-width:860px;margin:0 auto;padding:22px 16px 120px;display:flex;flex-direction:column;gap:16px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
+  .card h2{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);font-weight:600;margin-bottom:14px}
+  label{display:block;font-size:13px;color:var(--dim);margin-bottom:6px}
+  input,select,textarea{width:100%;background:#0d0d0f;border:1px solid var(--line);color:var(--ink);border-radius:9px;padding:10px 12px;font:inherit}
+  input:focus,select:focus,textarea:focus{outline:2px solid var(--ambre);outline-offset:-1px}
+  textarea{min-height:110px;resize:vertical}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+  button{font:inherit;cursor:pointer;border-radius:9px;border:1px solid var(--line);background:#1d1d21;color:var(--ink);padding:9px 14px}
+  button:hover{border-color:#3a3a40}
+  .btn-main{background:var(--ambre);color:#111;border-color:var(--ambre);font-weight:600}
+  .btn-main:disabled{opacity:.5;cursor:default}
+  a.btn{color:var(--ink);text-decoration:none;border:1px solid var(--line);border-radius:9px;padding:9px 14px;background:#1d1d21}
+  .toggles{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}
+  .tg{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;cursor:pointer;color:var(--ink);margin:0}
+  .tg input{width:18px;height:18px;accent-color:var(--ambre)}
+  .msg{display:grid;grid-template-columns:110px 1fr 120px auto;gap:8px;align-items:center;padding:10px;border:1px solid var(--line);border-radius:10px;margin-bottom:8px}
+  .msg.off{opacity:.45}
+  .msg .acts{display:flex;gap:4px}
+  .msg .acts button{padding:7px 9px}
+  .dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px}
+  .preview{background:#030303;border-radius:10px;padding:12px 14px;font-size:20px;min-height:52px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .hint{font-size:13px;color:var(--dim);margin-top:8px}
+  .sugg{border:1px solid var(--line);border-radius:9px;margin-top:6px;overflow:hidden}
+  .sugg div{padding:9px 12px;cursor:pointer;border-bottom:1px solid var(--line)}
+  .sugg div:hover{background:#1d1d21}
+  .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#1d1d21;border:1px solid var(--line);padding:12px 18px;border-radius:10px;opacity:0;transition:.3s;pointer-events:none;z-index:10}
+  .toast.show{opacity:1}
+  .login{min-height:100vh;display:grid;place-items:center;padding:20px}
+  .login .card{width:min(360px,100%);text-align:center}
+  .login .led{font-size:34px;margin-bottom:6px}
+  .login input{text-align:center;margin:14px 0}
+  .err{color:var(--rouge);font-size:14px;min-height:20px}
+  .warn{background:#2a1e08;border:1px solid #5a4416;color:var(--ambre);padding:12px 14px;border-radius:10px;font-size:14px}
+  @media (max-width:640px){.msg{grid-template-columns:1fr 1fr}.msg .txt{grid-column:1/-1;grid-row:1}}
+</style>
+</head>
+<body>
+
+<div class="login" id="login">
+  <div class="card">
+    <div class="led">CRC</div>
+    <div style="color:var(--dim)">Administration de l'écran</div>
+    <input id="pin" type="password" autocomplete="off" placeholder="github_pat_…" aria-label="Clé GitHub">
+    <button class="btn-main" style="width:100%" id="go">Entrer</button>
+    <div class="err" id="err"></div>
+    <p class="hint" style="text-align:left">Colle ta clé GitHub (fine-grained token) avec l'accès <b>Contents : Read and write</b> sur ce repo uniquement. Elle reste enregistrée dans ce navigateur. <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" style="color:var(--ambre)">Créer une clé</a></p>
+  </div>
+</div>
+
+<div id="app" hidden>
+  <header>
+    <h1 class="led">CRC ADMIN</h1>
+    <span class="sp"></span>
+    <a class="btn" href="./" target="_blank">Voir l'écran</a>
+    <button class="btn-main" id="save">Enregistrer</button>
+  </header>
+  <main>
+    <div class="warn" id="localWarn" hidden>Repo GitHub non détecté (config.js vide et page hors GitHub Pages). Tu peux tester l'interface, mais rien ne sera enregistré.</div>
+
+    <section class="card">
+      <h2>Général</h2>
+      <div class="grid">
+        <div><label for="titre">Titre de l'écran</label><input id="titre" maxlength="30"></div>
+        <div><label for="ouverture">Ouverture</label><input id="ouverture" type="time"></div>
+        <div><label for="fermeture">Fermeture</label><input id="fermeture" type="time"></div>
+      </div>
+      <p class="hint">Les horaires servent à la jauge de la semaine, du lundi au samedi.</p>
+    </section>
+
+    <section class="card">
+      <h2>Blocs affichés</h2>
+      <div class="toggles">
+        <label class="tg"><input type="checkbox" data-bloc="meteo"> Météo</label>
+        <label class="tg"><input type="checkbox" data-bloc="fete"> Fête du jour</label>
+        <label class="tg"><input type="checkbox" data-bloc="semaine"> Avancement semaine</label>
+        <label class="tg"><input type="checkbox" data-bloc="funfacts"> Fun facts</label>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Ville météo</h2>
+      <label for="ville">Rechercher une ville</label>
+      <input id="ville" autocomplete="off">
+      <div class="sugg" id="sugg" hidden></div>
+      <p class="hint" id="coords"></p>
+    </section>
+
+    <section class="card">
+      <h2>Messages</h2>
+      <div id="msgs"></div>
+      <button id="add">+ Ajouter un message</button>
+      <p class="hint">Un message trop long défile tout seul sur l'écran. Au delà de quelques lignes, les messages tournent par pages.</p>
+      <div style="margin-top:14px">
+        <label>Aperçu du premier message actif</label>
+        <div class="preview led" id="preview"></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Fun facts perso</h2>
+      <label for="facts">Un par ligne, ils passent avant ceux intégrés dans le bandeau</label>
+      <textarea id="facts" placeholder="Bravo à l'équipe pour les 1000 appels de la semaine"></textarea>
+    </section>
+
+    <section class="card">
+      <h2>Animation</h2>
+      <div class="grid">
+        <div><label for="vitesse">Vitesse du défilement <span id="vVal"></span></label><input id="vitesse" type="range" min="20" max="140" step="5"></div>
+        <div><label for="rotation">Changement de page des messages (secondes)</label><input id="rotation" type="number" min="3" max="120"></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Connexion</h2>
+      <p class="hint" style="margin:0 0 10px">Les modifs sont enregistrées dans le fichier data.json du repo <b id="repoName"></b>. L'écran les récupère en 2 minutes max.</p>
+      <button id="logout">Oublier la clé sur ce navigateur</button>
+    </section>
+  </main>
+</div>
+<div class="toast" id="toast"></div>
+
+<script src="config.js"></script>
+<script>
+const $ = id => document.getElementById(id);
+const CFG = window.CRC_CONFIG || {};
+const REPO = CFG.GITHUB_OWNER && CFG.GITHUB_REPO ? `${CFG.GITHUB_OWNER}/${CFG.GITHUB_REPO}` : "";
+const LOCAL = !REPO;
+const API = `https://api.github.com/repos/${REPO}/contents/data.json`;
+const COLORS = {ambre:"Ambre",vert:"Vert",rouge:"Rouge",blanc:"Blanc",bleu:"Bleu"};
+let S = structuredClone(window.CRC_DEFAULTS), PIN = "", SHA = null;
+
+function toast(t){ const el=$('toast'); el.textContent=t; el.classList.add('show'); clearTimeout(el._t); el._t=setTimeout(()=>el.classList.remove('show'),3000); }
+const H = () => ({Authorization:`Bearer ${PIN}`, Accept:"application/vnd.github+json", "X-GitHub-Api-Version":"2022-11-28"});
+const b64 = str => { let bin=""; new TextEncoder().encode(str).forEach(c=>bin+=String.fromCharCode(c)); return btoa(bin); };
+const unb64 = b => new TextDecoder().decode(Uint8Array.from(atob(b.replace(/\n/g,"")), c=>c.charCodeAt(0)));
+
+async function readData(){
+  const r = await fetch(`${API}?ref=${CFG.BRANCH||'main'}&t=${Date.now()}`,{headers:H(),cache:"no-store"});
+  if(r.status===401) throw new Error("Clé refusée par GitHub");
+  if(r.status===404){ SHA=null; return null; }
+  if(!r.ok) throw new Error("GitHub répond "+r.status);
+  const j = await r.json(); SHA = j.sha;
+  return JSON.parse(unb64(j.content));
+}
+
+/* ---------- Connexion ---------- */
+async function login(){
+  const p = $('pin').value.trim();
+  $('err').textContent = "";
+  PIN = p;
+  if(LOCAL) return open(null);
+  if(!p){ $('err').textContent="Colle ta clé GitHub"; return; }
+  try{
+    const data = await readData();
+    try{ localStorage.setItem("crc_token",p); }catch(e){}
+    open(data);
+  }catch(e){ $('err').textContent = e.message; }
+}
+$('go').onclick = login;
+$('pin').onkeydown = e => { if(e.key==="Enter") login(); };
+
+function open(data){
+  $('login').hidden = true; $('app').hidden = false;
+  $('localWarn').hidden = !LOCAL;
+  $('repoName').textContent = REPO || "non détecté";
+  if(data) S = Object.assign(structuredClone(window.CRC_DEFAULTS), data);
+  S.blocs = Object.assign({}, window.CRC_DEFAULTS.blocs, S.blocs||{});
+  fill();
+}
+(function auto(){ try{ const p=localStorage.getItem("crc_token"); if(p){ $('pin').value=p; login(); } }catch(e){} })();
+$('logout').onclick = () => { try{ localStorage.removeItem("crc_token"); }catch(e){} location.reload(); };
+
+/* ---------- Formulaire ---------- */
+function fill(){
+  $('titre').value = S.titre||"";
+  $('ouverture').value = S.ouverture; $('fermeture').value = S.fermeture;
+  document.querySelectorAll('[data-bloc]').forEach(c => c.checked = !!S.blocs[c.dataset.bloc]);
+  $('ville').value = S.ville; $('coords').textContent = `${S.lat}, ${S.lon}`;
+  $('facts').value = (S.funfacts_perso||[]).join("\n");
+  $('vitesse').value = S.vitesse; $('vVal').textContent = S.vitesse;
+  $('rotation').value = S.rotation;
+  drawMsgs();
+}
+function esc(s){ return String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+function drawMsgs(){
+  $('msgs').innerHTML = S.messages.map((m,i)=>`
+    <div class="msg ${m.actif===false?'off':''}">
+      <input value="${esc(m.badge||'Info')}" maxlength="10" data-i="${i}" data-k="badge" aria-label="Étiquette">
+      <input class="txt" value="${esc(m.texte)}" maxlength="200" data-i="${i}" data-k="texte" aria-label="Message">
+      <select data-i="${i}" data-k="couleur" aria-label="Couleur">${Object.entries(COLORS).map(([k,v])=>`<option value="${k}" ${m.couleur===k?'selected':''}>${v}</option>`).join("")}</select>
+      <div class="acts">
+        <button data-a="toggle" data-i="${i}" title="Activer ou masquer">${m.actif===false?'Off':'On'}</button>
+        <button data-a="up" data-i="${i}" title="Monter">↑</button>
+        <button data-a="down" data-i="${i}" title="Descendre">↓</button>
+        <button data-a="del" data-i="${i}" title="Supprimer">✕</button>
+      </div>
+    </div>`).join("") || `<p class="hint">Aucun message pour l'instant.</p>`;
+  preview();
+}
+function preview(){
+  const m = S.messages.find(x=>x.actif!==false && (x.texte||"").trim());
+  const p = $('preview');
+  p.textContent = m ? m.texte.toUpperCase() : "—";
+  p.style.color = m ? `var(--${m.couleur||'ambre'})` : "var(--dim)";
+}
+$('msgs').addEventListener('input', e => { const t=e.target; if(t.dataset.k){ S.messages[+t.dataset.i][t.dataset.k]=t.value; preview(); } });
+$('msgs').addEventListener('click', e => {
+  const b = e.target.closest('button'); if(!b) return;
+  const i = +b.dataset.i, a = b.dataset.a, L = S.messages;
+  if(a==="toggle") L[i].actif = L[i].actif===false;
+  if(a==="up" && i>0) [L[i-1],L[i]]=[L[i],L[i-1]];
+  if(a==="down" && i<L.length-1) [L[i+1],L[i]]=[L[i],L[i+1]];
+  if(a==="del") L.splice(i,1);
+  drawMsgs();
+});
+$('add').onclick = () => { S.messages.push({badge:"Info",texte:"",couleur:"ambre",actif:true}); drawMsgs(); document.querySelectorAll('.msg .txt').forEach((x,i,a)=>{ if(i===a.length-1) x.focus(); }); };
+$('vitesse').oninput = e => $('vVal').textContent = e.target.value;
+
+/* ---------- Recherche de ville ---------- */
+let tmr;
+$('ville').oninput = e => {
+  clearTimeout(tmr);
+  const q = e.target.value.trim();
+  if(q.length<2){ $('sugg').hidden=true; return; }
+  tmr = setTimeout(async()=>{
+    try{
+      const j = await (await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(q)}&count=5&language=fr&countryCode=FR`)).json();
+      const res = j.results||[];
+      $('sugg').innerHTML = res.map((r,i)=>`<div data-i="${i}">${esc(r.name)} <span style="color:var(--dim)">${esc(r.admin2||r.admin1||"")}</span></div>`).join("");
+      $('sugg').hidden = !res.length;
+      $('sugg').onclick = ev => { const d=ev.target.closest('[data-i]'); if(!d) return; const r=res[+d.dataset.i];
+        S.ville=r.name; S.lat=+r.latitude.toFixed(4); S.lon=+r.longitude.toFixed(4);
+        $('ville').value=r.name; $('coords').textContent=`${S.lat}, ${S.lon}`; $('sugg').hidden=true; };
+    }catch(err){}
+  },300);
+};
+
+/* ---------- Enregistrement ---------- */
+function collect(){
+  S.titre = $('titre').value.trim() || "CRC";
+  S.ouverture = $('ouverture').value || "08:30";
+  S.fermeture = $('fermeture').value || "18:30";
+  document.querySelectorAll('[data-bloc]').forEach(c => S.blocs[c.dataset.bloc] = c.checked);
+  S.funfacts_perso = $('facts').value.split("\n").map(s=>s.trim()).filter(Boolean);
+  S.vitesse = +$('vitesse').value;
+  S.rotation = Math.max(3, +$('rotation').value || 10);
+  S.messages = S.messages.filter(m => (m.texte||"").trim());
+  return S;
+}
+$('save').onclick = async () => {
+  const data = collect();
+  if(LOCAL){ toast("Repo non détecté, rien n'est enregistré"); return; }
+  $('save').disabled = true;
+  try{
+    data.updated_at = new Date().toISOString();
+    const send = () => fetch(API,{method:"PUT",headers:H(),body:JSON.stringify(Object.assign({
+      message:"Mise à jour de l'écran CRC", branch:CFG.BRANCH||"main",
+      content:b64(JSON.stringify(data,null,2))}, SHA?{sha:SHA}:{}))});
+    let r = await send();
+    if(r.status===409 || r.status===422){ await readData(); r = await send(); }
+    if(!r.ok){ const j=await r.json().catch(()=>({})); throw new Error(j.message || ("GitHub répond "+r.status)); }
+    SHA = (await r.json()).content.sha;
+    toast("Enregistré, l'écran se met à jour sous 2 min"); drawMsgs();
+  }catch(e){ toast(e.message); }
+  $('save').disabled = false;
+};
+</script>
+</body>
+</html>

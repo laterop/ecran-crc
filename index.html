@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Écran CRC</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Doto:wght@600;900&family=DotGothic16&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#030303; --panel:#0a0a0a; --sep:#1a1a1a;
+    --ambre:#ffb21e; --vert:#48ff72; --rouge:#ff3d3d; --blanc:#f2efe6; --bleu:#3fb8ff;
+    --off:#2a1e08;
+    --led:'Doto','DotGothic16',monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;background:var(--bg)}
+  body{color:var(--ambre);font-family:var(--led);font-weight:900;overflow:hidden;cursor:none;text-transform:uppercase}
+  /* grille de points façon matrice LED */
+  body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:50;
+    background:radial-gradient(circle at center,transparent 52%,rgba(0,0,0,.55) 62%);background-size:3px 3px}
+  .glow{text-shadow:0 0 .35vw currentColor,0 0 1.2vw color-mix(in srgb,currentColor 45%,transparent)}
+
+  .board{height:100vh;display:flex;flex-direction:column;padding:1.6vw;gap:.6vw}
+  .head{display:flex;align-items:center;justify-content:space-between;background:var(--panel);border:1px solid var(--sep);padding:1vw 1.6vw}
+  .head .t{font-size:2.6vw;letter-spacing:.12em}
+  .head .t small{display:block;font-size:1.25vw;color:var(--blanc);opacity:.85;letter-spacing:.08em;margin-top:.3vw}
+  .clock{font-size:5.6vw;letter-spacing:.05em;color:var(--blanc);font-variant-numeric:tabular-nums}
+  .clock .colon{animation:blink 1s steps(1) infinite}
+  .clock .s{font-size:2.6vw;color:var(--ambre);margin-left:.5vw}
+  @keyframes blink{50%{opacity:.15}}
+
+  .rows{flex:1;display:flex;flex-direction:column;gap:.6vw;min-height:0}
+  .row{flex:1;display:grid;grid-template-columns:13vw 1fr auto;align-items:center;gap:1.6vw;background:var(--panel);border:1px solid var(--sep);padding:0 1.6vw;min-height:0;overflow:hidden}
+  .badge{font-size:1.35vw;letter-spacing:.1em;text-align:center;padding:.7vw .4vw;border:.18vw solid currentColor;border-radius:.3vw}
+  .main{font-size:2.9vw;white-space:nowrap;overflow:hidden;position:relative;min-width:0}
+  .main .scroll{display:inline-block;padding-left:100%;animation:marquee linear infinite}
+  .side{font-size:2vw;color:var(--blanc);white-space:nowrap;text-align:right}
+  .c-ambre{color:var(--ambre)}.c-vert{color:var(--vert)}.c-rouge{color:var(--rouge)}.c-blanc{color:var(--blanc)}.c-bleu{color:var(--bleu)}
+
+  .bar{display:flex;gap:.35vw;margin-top:.6vw}
+  .bar i{flex:1;height:1.4vw;background:var(--off);border-radius:.15vw}
+  .bar i.on{background:var(--vert);box-shadow:0 0 .6vw var(--vert)}
+  .days{display:flex;gap:.5vw}
+  .days b{width:2.4vw;height:2.4vw;display:grid;place-items:center;font-size:1.3vw;border:.15vw solid var(--off);color:#5a4416;border-radius:.2vw}
+  .days b.done{border-color:var(--vert);color:var(--vert)}
+  .days b.now{border-color:var(--ambre);color:var(--bg);background:var(--ambre);animation:blink 1.4s steps(1) infinite}
+
+  .ticker{display:grid;grid-template-columns:auto 1fr;align-items:center;background:var(--panel);border:1px solid var(--sep);height:5vw;overflow:hidden}
+  .ticker .lab{background:var(--ambre);color:var(--bg);height:100%;display:grid;place-items:center;padding:0 1.4vw;font-size:1.4vw;letter-spacing:.1em}
+  .ticker .track{overflow:hidden;white-space:nowrap;font-size:2.3vw;color:var(--blanc)}
+  .ticker .track span{display:inline-block;padding-left:100%;animation:marquee linear infinite}
+  @keyframes marquee{to{transform:translateX(-100%)}}
+
+  .status{position:fixed;right:1.8vw;bottom:.4vw;font-size:.8vw;color:#4a3a14;z-index:60}
+  .fade{animation:fade .6s}
+  @keyframes fade{from{opacity:0}}
+
+  @media (max-width:800px){
+    body{cursor:auto}
+    .board{padding:8px;gap:6px}
+    .head .t{font-size:5vw}.head .t small{font-size:3vw}.clock{font-size:10vw}.clock .s{font-size:5vw}
+    .row{grid-template-columns:22vw 1fr;padding:10px;gap:10px}.side{grid-column:2;text-align:left;font-size:3.6vw}
+    .badge{font-size:2.6vw}.main{font-size:5vw}.days b{width:5vw;height:5vw;font-size:2.8vw}.bar i{height:3vw}
+    .ticker{height:10vw}.ticker .lab{font-size:2.8vw}.ticker .track{font-size:4.6vw}
+  }
+</style>
+</head>
+<body>
+<div class="board">
+  <div class="head">
+    <div class="t glow" id="titre">CRC<small id="date"></small></div>
+    <div class="clock glow"><span id="hh">--</span><span class="colon">:</span><span id="mm">--</span><span class="s" id="ss">--</span></div>
+  </div>
+  <div class="rows" id="rows"></div>
+  <div class="ticker" id="ticker">
+    <div class="lab">LE SAVIEZ-VOUS</div>
+    <div class="track"><span id="tick" class="glow"></span></div>
+  </div>
+</div>
+<div class="status" id="status"></div>
+
+<script src="config.js"></script>
+<script>
+const $ = id => document.getElementById(id);
+const CFG = window.CRC_CONFIG || {};
+let S = structuredClone(window.CRC_DEFAULTS);
+let meteo = null, page = 0, lastUpdate = null;
+
+/* ---------- Fête du jour ---------- */
+const FETES = [
+["Jour de l'An|!","Basile","Geneviève","Odilon","Édouard","Mélaine","Raymond","Lucien","Alix","Guillaume","Paulin","Tatiana","Yvette","Nina","Rémi","Marcel","Roseline","Prisca","Marius","Sébastien","Agnès","Vincent","Barnard","François de Sales","Conversion de Paul|!","Paule","Angèle","Thomas","Gildas","Martine","Marcelle"],
+["Ella","Chandeleur|!","Blaise","Véronique","Agathe","Gaston","Eugénie","Jacqueline","Apolline","Arnaud","Notre-Dame de Lourdes|!","Félix","Béatrice","Valentin","Claude","Julienne","Alexis","Bernadette","Gabin","Aimée","Damien","Isabelle","Lazare","Modeste","Roméo","Nestor","Honorine","Romain","Auguste"],
+["Aubin","Charles","Guénolé","Casimir","Olive","Colette","Félicité","Jean de Dieu","Françoise","Vivien","Rosine","Justine","Rodrigue","Mathilde","Louise","Bénédicte","Patrice","Cyrille","Joseph","Herbert","Clémence","Léa","Victorien","Catherine","Annonciation|!","Larissa","Habib","Gontran","Gwladys","Amédée","Benjamin"],
+["Hugues","Sandrine","Richard","Isidore","Irène","Marcellin","Jean-Baptiste","Julie","Gautier","Fulbert","Stanislas","Jules","Ida","Maxime","Paterne","Benoît-Joseph","Anicet","Parfait","Emma","Odette","Anselme","Alexandre","Georges","Fidèle","Marc","Alida","Zita","Valérie","Catherine","Robert"],
+["Fête du Travail|!","Boris","Philippe et Jacques","Sylvain","Judith","Prudence","Gisèle","Désiré","Pacôme","Solange","Estelle","Achille","Rolande","Matthias","Denise","Honoré","Pascal","Éric","Yves","Bernardin","Constantin","Émile","Didier","Donatien","Sophie","Bérenger","Augustin","Germain","Aymar","Ferdinand","Visitation|!"],
+["Justin","Blandine","Kévin","Clotilde","Igor","Norbert","Gilbert","Médard","Diane","Landry","Barnabé","Guy","Antoine","Élisée","Germaine","Jean-François","Hervé","Léonce","Romuald","Silvère","Rodolphe","Alban","Audrey","Jean-Baptiste","Prosper","Anthelme","Fernand","Irénée","Pierre et Paul","Martial"],
+["Thierry","Martinien","Thomas","Florent","Antoine","Mariette","Raoul","Thibaut","Amandine","Ulrich","Benoît","Olivier","Henri et Joël","Fête nationale|!","Donald","Notre-Dame du Mont Carmel|!","Charlotte","Frédéric","Arsène","Marina","Victor","Marie-Madeleine","Brigitte","Christine","Jacques","Anne et Joachim","Nathalie","Samson","Marthe","Juliette","Ignace"],
+["Alphonse","Julien","Lydie","Jean-Marie","Abel","Transfiguration|!","Gaétan","Dominique","Amour","Laurent","Claire","Clarisse","Hippolyte","Évrard","Assomption|!","Armel","Hyacinthe","Hélène","Jean Eudes","Bernard","Christophe","Fabrice","Rose","Barthélémy","Louis","Natacha","Monique","Augustin","Sabine","Fiacre","Aristide"],
+["Gilles","Ingrid","Grégoire","Rosalie","Raïssa","Bertrand","Reine","Adrien","Alain","Inès","Adelphe","Apollinaire","Aimé","Croix Glorieuse|!","Roland","Édith","Renaud","Nadège","Émilie","Davy","Matthieu","Maurice","Constant","Thècle","Hermann","Côme et Damien","Vincent de Paul","Venceslas","Michel","Jérôme"],
+["Thérèse","Léger","Gérard","François","Fleur","Bruno","Serge","Pélagie","Denis","Ghislain","Firmin","Wilfried","Géraud","Juste","Thérèse","Edwige","Baudouin","Luc","René","Adeline","Céline","Élodie","Jean","Florentin","Crépin","Dimitri","Émeline","Simon et Jude","Narcisse","Bienvenue","Quentin"],
+["Toussaint|!","Commémoration des défunts|!","Hubert","Charles","Sylvie","Bertille","Carine","Geoffroy","Théodore","Léon","Armistice|!","Christian","Brice","Sidoine","Albert","Marguerite","Élisabeth","Aude","Tanguy","Edmond","Présentation de Marie|!","Cécile","Clément","Flora","Catherine","Delphine","Séverin","Jacques","Saturnin","André"],
+["Florence","Viviane","François-Xavier","Barbara","Gérald","Nicolas","Ambroise","Immaculée Conception|!","Pierre","Romaric","Daniel","Jeanne","Lucie","Odile","Ninon","Alice","Gaël","Gatien","Urbain","Théophile","Pierre","Françoise","Armand","Adèle","Joyeux Noël|!","Étienne","Jean","Innocents|!","David","Roger","Sylvestre"]
+];
+function fete(d){
+  const raw = (FETES[d.getMonth()]||[])[d.getDate()-1] || "";
+  const [nom, flag] = raw.split("|");
+  if(!nom) return "";
+  return flag==="!" ? nom : "Bonne fête aux " + nom;
+}
+
+/* ---------- Fun facts ---------- */
+const FACTS = [
+  "Les poulpes ont trois cœurs et le sang bleu",
+  "Le miel ne se périme quasiment jamais",
+  "Les loutres de mer se tiennent la main en dormant pour ne pas dériver",
+  "Un escargot peut dormir jusqu'à trois ans d'affilée",
+  "La girafe dort à peine deux heures par jour",
+  "Sourire au téléphone, ça s'entend vraiment dans la voix",
+  "Certains manchots offrent un galet à leur partenaire",
+  "La Lune s'éloigne de la Terre d'environ quatre centimètres par an",
+  "Le chocolat servait de monnaie chez les Aztèques",
+  "Un chat passe environ les deux tiers de sa vie à dormir",
+  "Les flamants roses doivent leur couleur à ce qu'ils mangent",
+  "Un éclair est environ cinq fois plus chaud que la surface du Soleil",
+  "Une pause de cinq minutes par heure aide à rester concentré",
+  "Les abeilles peuvent reconnaître des visages humains",
+  "Le cœur d'une crevette se trouve dans sa tête",
+  "Il y a plus d'arbres sur Terre que d'étoiles dans la Voie lactée",
+  "Les vaches ont des meilleures amies et stressent quand on les sépare",
+  "Un nuage peut peser plusieurs centaines de tonnes",
+  "La tour Eiffel grandit de quelques centimètres en été avec la chaleur",
+  "Les koalas dorment jusqu'à vingt heures par jour"
+];
+
+/* ---------- Horloge ---------- */
+function tick(){
+  const d = new Date();
+  $('hh').textContent = String(d.getHours()).padStart(2,'0');
+  $('mm').textContent = String(d.getMinutes()).padStart(2,'0');
+  $('ss').textContent = String(d.getSeconds()).padStart(2,'0');
+  $('date').textContent = d.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+}
+setInterval(tick,1000); tick();
+
+/* ---------- Semaine du lundi au samedi ---------- */
+function mins(hm){ const [h,m]=(hm||"0:0").split(":").map(Number); return h*60+(m||0); }
+function semaine(d){
+  const o = mins(S.ouverture), f = mins(S.fermeture), jour = Math.max(1,f-o);
+  const dow = d.getDay(); // 0 dimanche
+  const now = d.getHours()*60+d.getMinutes();
+  let pct, label;
+  if(dow===0){ pct=100; label="Dimanche, repos"; }
+  else{
+    const today = Math.max(0,Math.min(jour,now-o));
+    pct = ((dow-1)*jour + today) / (6*jour) * 100;
+    if(now < o) label = "Ouverture à " + S.ouverture.replace(":","h");
+    else if(now >= f) label = dow===6 ? "Semaine bouclée" : "Fermé, à demain";
+    else { const r=f-now; label = "Fermeture dans " + Math.floor(r/60)+"h"+String(r%60).padStart(2,'0'); }
+  }
+  return {pct:Math.max(0,Math.min(100,pct)), label, dow};
+}
+
+/* ---------- Météo ---------- */
+const WMO = {0:"Grand soleil",1:"Plutôt dégagé",2:"Quelques nuages",3:"Couvert",45:"Brouillard",48:"Brouillard givrant",
+  51:"Bruine légère",53:"Bruine",55:"Bruine dense",61:"Petite pluie",63:"Pluie",65:"Forte pluie",66:"Pluie verglaçante",67:"Pluie verglaçante",
+  71:"Neige légère",73:"Neige",75:"Forte neige",77:"Grains de neige",80:"Averses",81:"Averses",82:"Fortes averses",85:"Averses de neige",86:"Averses de neige",
+  95:"Orage",96:"Orage et grêle",99:"Gros orage"};
+async function loadMeteo(){
+  try{
+    const u = `https://api.open-meteo.com/v1/forecast?latitude=${S.lat}&longitude=${S.lon}&current=temperature_2m,apparent_temperature,weather_code,wind_speed_10m&daily=temperature_2m_max,temperature_2m_min&forecast_days=1&timezone=auto`;
+    const j = await (await fetch(u)).json();
+    meteo = { t:Math.round(j.current.temperature_2m), r:Math.round(j.current.apparent_temperature),
+      v:Math.round(j.current.wind_speed_10m), txt:WMO[j.current.weather_code]||"Météo",
+      min:Math.round(j.daily.temperature_2m_min[0]), max:Math.round(j.daily.temperature_2m_max[0]) };
+  }catch(e){ meteo = null; }
+  render();
+}
+
+/* ---------- Données admin ---------- */
+async function fetchData(){
+  // 1. API GitHub (à jour tout de suite)  2. fichier publié sur Pages (cache de quelques minutes)
+  if(CFG.GITHUB_OWNER && CFG.GITHUB_REPO){
+    try{
+      const r = await fetch(`https://api.github.com/repos/${CFG.GITHUB_OWNER}/${CFG.GITHUB_REPO}/contents/data.json?ref=${CFG.BRANCH||'main'}`,
+        {headers:{Accept:"application/vnd.github.raw+json"}, cache:"no-store"});
+      if(r.ok) return await r.json();
+    }catch(e){}
+  }
+  const r = await fetch(`data.json?t=${Date.now()}`, {cache:"no-store"});
+  if(!r.ok) throw new Error("data.json introuvable");
+  return await r.json();
+}
+async function loadData(){
+  try{
+    const data = await fetchData();
+    const stamp = data.updated_at || JSON.stringify(data);
+    if(stamp === lastUpdate) return false;
+    const ville = S.ville, lat = S.lat;
+    lastUpdate = stamp;
+    S = Object.assign(structuredClone(window.CRC_DEFAULTS), data||{});
+    S.blocs = Object.assign({}, window.CRC_DEFAULTS.blocs, (data||{}).blocs||{});
+    $('status').textContent = data.updated_at ? "maj " + new Date(data.updated_at).toLocaleString('fr-FR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}) : "";
+    if(S.ville!==ville || S.lat!==lat) loadMeteo();
+    buildTicker();
+    return true;
+  }catch(e){ $('status').textContent="hors ligne"; return false; }
+}
+
+/* ---------- Rendu ---------- */
+function esc(s){ return String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+function row(badge, color, main, side=""){
+  return `<div class="row fade"><div class="badge glow c-${color}">${esc(badge)}</div><div class="main glow c-${color}"><span class="txt">${main}</span></div><div class="side glow">${side}</div></div>`;
+}
+function render(){
+  const d = new Date(), out = [];
+  $('titre').firstChild.textContent = S.titre || "CRC";
+  if(S.blocs.meteo){
+    out.push(meteo
+      ? row("Météo","ambre", `${esc(meteo.txt)} ${meteo.t}°`, `${esc(S.ville)} · ${meteo.min}° / ${meteo.max}° · vent ${meteo.v} km/h`)
+      : row("Météo","ambre","Chargement…", esc(S.ville)));
+  }
+  if(S.blocs.fete){ const f = fete(d); if(f) out.push(row("Fête","blanc", esc(f))); }
+  if(S.blocs.semaine){
+    const w = semaine(d), n = 30, on = Math.round(w.pct/100*n);
+    const bar = `<div class="bar">${Array.from({length:n},(_,i)=>`<i class="${i<on?'on':''}"></i>`).join("")}</div>`;
+    const days = `<div class="days">${["L","M","M","J","V","S"].map((l,i)=>`<b class="${w.dow===0||i+1<w.dow?'done':i+1===w.dow?'now':''}">${l}</b>`).join("")}</div>`;
+    out.push(`<div class="row fade"><div class="badge glow c-vert">Semaine</div><div class="main glow c-vert" style="overflow:visible">${Math.round(w.pct)} % · ${esc(w.label)}${bar}</div><div class="side">${days}</div></div>`);
+  }
+  const msgs = (S.messages||[]).filter(m=>m.actif!==false && (m.texte||"").trim());
+  const libres = Math.max(1, 6 - out.length);
+  const pages = Math.max(1, Math.ceil(msgs.length/libres));
+  page = page % pages; window.__pages = pages;
+  msgs.slice(page*libres, page*libres+libres).forEach(m => out.push(row(m.badge||"Info", m.couleur||"ambre", esc(m.texte))));
+  $('rows').innerHTML = out.join("");
+  // texte trop long : défilement
+  document.querySelectorAll('.main').forEach(el=>{
+    const t = el.querySelector('.txt');
+    if(t && t.scrollWidth > el.clientWidth + 2){
+      t.classList.add('scroll');
+      t.style.animationDuration = Math.max(8,(t.scrollWidth+el.clientWidth)/(S.vitesse||60)/ (window.innerWidth/1000)) + "s";
+    }
+  });
+}
+function buildTicker(){
+  const perso = (S.funfacts_perso||[]).filter(Boolean);
+  const list = S.blocs.funfacts ? [...perso, ...FACTS.sort(()=>Math.random()-.5)] : perso;
+  $('ticker').style.display = list.length ? "" : "none";
+  const t = $('tick');
+  t.textContent = list.join("   ◆   ");
+  requestAnimationFrame(()=>{ t.style.animationDuration = Math.max(20, t.scrollWidth/(S.vitesse||60)/(window.innerWidth/1000)) + "s"; });
+}
+
+/* ---------- Boucles ---------- */
+(async()=>{
+  await loadData();
+  buildTicker(); loadMeteo(); render();
+  setInterval(async()=>{ if(await loadData()) render(); }, 2*60*1000);
+  setInterval(loadMeteo, 10*60*1000);
+  let n = 0;
+  setInterval(()=>{ n++; if(window.__pages>1 && n % Math.max(3,S.rotation||10) === 0){ page++; render(); } else if(n % 60 === 0) render(); }, 1000);
+  setInterval(()=>{ const d=new Date(); if(d.getHours()===4&&d.getMinutes()===0) location.reload(); },60000);
+})();
+</script>
+</body>
+</html>
