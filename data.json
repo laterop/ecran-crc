@@ -9,7 +9,7 @@
   "resolution": "auto",
   "res_w": 435,
   "res_h": 430,
-  "reload": 1791540626510,
+  "reload": 1791540676118,
   "ville": "Montpellier",
   "lat": 43.6108,
   "lon": 3.8767,
@@ -21,9 +21,16 @@
     "semaine": true,
     "funfacts": true
   },
-  "messages": [],
+  "messages": [
+    {
+      "badge": "Info",
+      "texte": "Ben est fatigué, c'est normal on est vendredi",
+      "couleur": "bleu",
+      "actif": true
+    }
+  ],
   "funfacts_perso": [],
   "vitesse": 85,
   "rotation": 10,
-  "updated_at": "2026-10-09T10:10:26.510Z"
+  "updated_at": "2026-10-09T10:11:16.118Z"
 }
