@@ -9,7 +9,7 @@
   "resolution": "auto",
   "res_w": 435,
   "res_h": 430,
-  "reload": 1791541025097,
+  "reload": 1791541085242,
   "ville": "Montpellier",
   "lat": 43.6108,
   "lon": 3.8767,
@@ -27,10 +27,16 @@
       "texte": "Ben est fatigué, c'est normal on est vendredi",
       "couleur": "rouge",
       "actif": true
+    },
+    {
+      "badge": "Incroyable",
+      "texte": "Oui je peux écrire ce que je veux",
+      "couleur": "ambre",
+      "actif": true
     }
   ],
   "funfacts_perso": [],
   "vitesse": 40,
   "rotation": 10,
-  "updated_at": "2026-10-09T10:17:05.097Z"
+  "updated_at": "2026-10-09T10:18:05.242Z"
 }
