@@ -9,7 +9,7 @@
   "resolution": "auto",
   "res_w": 435,
   "res_h": 430,
-  "reload": 1791546068696,
+  "reload": 1791546858462,
   "ville": "Montpellier",
   "lat": 43.6108,
   "lon": 3.8767,
@@ -17,10 +17,53 @@
   "fermeture": "20:30",
   "blocs": {
     "meteo": true,
+    "previsions": true,
     "fete": true,
+    "anniv": true,
+    "rebours": true,
+    "objectif": false,
     "semaine": true,
+    "feries": true,
+    "vacances": true,
+    "soleil": true,
+    "citation": true,
+    "histoire": true,
+    "messages": true,
     "funfacts": true
   },
+  "ordre": [
+    "meteo",
+    "previsions",
+    "fete",
+    "anniv",
+    "rebours",
+    "objectif",
+    "semaine",
+    "feries",
+    "vacances",
+    "soleil",
+    "citation",
+    "histoire",
+    "messages"
+  ],
+  "lignes": 5,
+  "anniversaires": [],
+  "anniv_avance": 3,
+  "rebours": [
+    {
+      "titre": "Noël",
+      "date": "2026-12-25",
+      "afficher": 60,
+      "couleur": "rouge"
+    }
+  ],
+  "objectif": {
+    "titre": "Objectif QS",
+    "valeur": 0,
+    "cible": 90,
+    "unite": " %"
+  },
+  "citations_perso": [],
   "messages": [
     {
       "badge": "Info",
@@ -50,5 +93,5 @@
   "funfacts_perso": [],
   "vitesse": 40,
   "rotation": 10,
-  "updated_at": "2026-10-09T11:41:08.696Z"
+  "updated_at": "2026-10-09T11:54:18.462Z"
 }
