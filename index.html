@@ -270,19 +270,26 @@ async function loadMeteo(){
 }
 
 /* ---------- Données admin ---------- */
+let apiPause = 0;
 async function fetchData(){
-  // 1. API GitHub (à jour tout de suite)  2. fichier publié sur Pages (cache de quelques minutes)
-  if(CFG.GITHUB_OWNER && CFG.GITHUB_REPO){
+  // 1. API GitHub (à jour tout de suite)  2. fichier publié sur Pages si l'API est saturée
+  if(CFG.GITHUB_OWNER && CFG.GITHUB_REPO && Date.now() > apiPause){
     try{
       const r = await fetch(`https://api.github.com/repos/${CFG.GITHUB_OWNER}/${CFG.GITHUB_REPO}/contents/data.json?ref=${CFG.BRANCH||'main'}`,
         {headers:{Accept:"application/vnd.github.raw+json"}, cache:"no-store"});
-      if(r.ok) return await r.json();
+      if(r.ok){
+        const left = +r.headers.get("x-ratelimit-remaining");
+        if(!isNaN(left) && left < 5) apiPause = Date.now() + 10*60*1000;
+        return await r.json();
+      }
+      if(r.status===403 || r.status===429) apiPause = Date.now() + 10*60*1000;
     }catch(e){}
   }
   const r = await fetch(`data.json?t=${Date.now()}`, {cache:"no-store"});
   if(!r.ok) throw new Error("data.json introuvable");
   return await r.json();
 }
+
 /* ---------- Horloge ---------- */
 function tick(){
   const d = new Date();
@@ -414,7 +421,7 @@ layout(); tick(); setInterval(tick, 1000);
   if(!PREVIEW) await loadData();
   if(!meteo) loadMeteo();
   buildTicker(); render();
-  setInterval(loadData, 2*60*1000);
+  setInterval(loadData, 60*1000);
   setInterval(loadMeteo, 10*60*1000);
   let rz; addEventListener('resize', ()=>{ clearTimeout(rz); rz = setTimeout(()=>{ layout(); render(); buildTicker(); }, 150); });
   let n = 0;

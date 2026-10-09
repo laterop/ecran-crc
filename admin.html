@@ -174,12 +174,12 @@
 
     <section class="card">
       <h2>Connexion</h2>
-      <p class="hint" style="margin:0 0 10px">Les modifs sont enregistrées dans le fichier data.json du repo <b id="repoName"></b>. L'écran les récupère en 2 minutes max.</p>
+      <p class="hint" style="margin:0 0 10px">Les modifs sont enregistrées dans le fichier data.json du repo <b id="repoName"></b>. L'écran se recharge tout seul en moins d'une minute.</p>
       <div style="display:flex;gap:8px;flex-wrap:wrap">
-        <button id="reload">Forcer l'écran à se recharger</button>
+        <button id="reload">Recharger l'écran maintenant</button>
         <button id="logout">Oublier la clé sur ce navigateur</button>
       </div>
-      <p class="hint">Le rechargement sert après une mise à jour du site, ou si l'écran semble bloqué. Il se fait au prochain passage, 2 minutes max.</p>
+      <p class="hint">Chaque enregistrement recharge l'écran tout seul, en moins d'une minute. Ce bouton sert juste si l'écran semble bloqué.</p>
     </section>
     </div>
     <aside class="pv">
@@ -387,13 +387,14 @@ function collect(apercu){
   S.messages = S.messages.filter(m => (m.texte||"").trim());
   return S;
 }
-$('reload').onclick = () => { S.reload = Date.now(); $('save').click(); };
+$('reload').onclick = () => $('save').click();
 $('save').onclick = async () => {
   const data = collect();
   if(LOCAL){ toast("Repo non détecté, rien n'est enregistré"); return; }
   $('save').disabled = true;
   try{
     data.updated_at = new Date().toISOString();
+    data.reload = Date.now(); S.reload = data.reload;
     const send = () => fetch(API,{method:"PUT",headers:H(),body:JSON.stringify(Object.assign({
       message:"Mise à jour de l'écran CRC", branch:CFG.BRANCH||"main",
       content:b64(JSON.stringify(data,null,2))}, SHA?{sha:SHA}:{}))});
@@ -401,7 +402,7 @@ $('save').onclick = async () => {
     if(r.status===409 || r.status===422){ await readData(); r = await send(); }
     if(!r.ok){ const j=await r.json().catch(()=>({})); throw new Error(j.message || ("GitHub répond "+r.status)); }
     SHA = (await r.json()).content.sha;
-    toast("Enregistré, l'écran se met à jour sous 2 min"); drawMsgs();
+    toast("Enregistré, l'écran se recharge dans moins d'une minute"); drawMsgs();
   }catch(e){ toast(e.message); }
   $('save').disabled = false;
 };
