@@ -9,7 +9,7 @@
   "resolution": "auto",
   "res_w": 435,
   "res_h": 430,
-  "reload": 1791543449426,
+  "reload": 1791543484082,
   "ville": "Montpellier",
   "lat": 43.6108,
   "lon": 3.8767,
@@ -27,30 +27,12 @@
       "texte": "Ben est fatigué, c'est normal on est vendredi",
       "couleur": "rouge",
       "actif": false
-    },
-    {
-      "badge": "TRAFIC",
-      "texte": "Réseau SNCF: Normal",
-      "couleur": "vert",
-      "actif": true
-    },
-    {
-      "badge": "TRAFIC",
-      "texte": "Réseau Sankéo : Perturbations en cours",
-      "couleur": "rouge",
-      "actif": true
-    },
-    {
-      "badge": "TRAFIC",
-      "texte": "Réseau TANGO : Perturbations habituelle",
-      "couleur": "ambre",
-      "actif": true
     }
   ],
   "funfacts_perso": [
-    "Le dauphin dort avec un seul œil ouvert pour surveiller ce qui l'entoure et respirer."
+    "Réseau TANGO : Perturbations habituelle - Réseau Sankéo : Perturbations en cours - Réseau SNCF: Normal"
   ],
   "vitesse": 40,
   "rotation": 10,
-  "updated_at": "2026-10-09T10:57:29.426Z"
+  "updated_at": "2026-10-09T10:58:04.082Z"
 }
