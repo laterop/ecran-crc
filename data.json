@@ -1,8 +1,5 @@
 {
   "titre": "Infos CRC",
-  "sous_titre": "Aujourd'hui",
-  "affichage": "auto",
-  "reload": null,
   "ville": "Montpellier",
   "lat": 43.6108,
   "lon": 3.8767,
@@ -20,16 +17,13 @@
       "texte": "Bienvenue sur l'écran du CRC",
       "couleur": "ambre",
       "actif": true
-    },
-    {
-      "badge": "Info",
-      "texte": "Pensez à faire une pause toutes les heures",
-      "couleur": "vert",
-      "actif": true
     }
   ],
   "funfacts_perso": [],
   "vitesse": 60,
   "rotation": 10,
-  "updated_at": null
+  "sous_titre": "Aujourd'hui",
+  "affichage": "auto",
+  "reload": null,
+  "updated_at": "2026-10-09T09:09:47.146Z"
 }
