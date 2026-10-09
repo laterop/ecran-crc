@@ -2,14 +2,14 @@
   "titre": "CRC MONTPELLIER",
   "sous_titre": "Aujourd'hui",
   "style": "gare",
-  "disposition": "liste",
+  "disposition": "carrousel",
   "cadre": false,
   "horloge": true,
   "taille": 160,
-  "resolution": "435x430",
+  "resolution": "auto",
   "res_w": 435,
   "res_h": 430,
-  "reload": 1791543553259,
+  "reload": 1791543620908,
   "ville": "Montpellier",
   "lat": 43.6108,
   "lon": 3.8767,
@@ -27,12 +27,28 @@
       "texte": "Ben est fatigué, c'est normal on est vendredi",
       "couleur": "rouge",
       "actif": false
+    },
+    {
+      "badge": "Trafic",
+      "texte": "Réseau TANGO : Perturbations habituelle",
+      "couleur": "ambre",
+      "actif": true
+    },
+    {
+      "badge": "Trafic",
+      "texte": "Réseau Sankéo : Perturbations en cours ",
+      "couleur": "rouge",
+      "actif": true
+    },
+    {
+      "badge": "Trafic",
+      "texte": "Réseau SNCF: Normal",
+      "couleur": "vert",
+      "actif": true
     }
   ],
-  "funfacts_perso": [
-    "Réseau TANGO : Perturbations habituelle - Réseau Sankéo : Perturbations en cours - Réseau SNCF: Normal"
-  ],
+  "funfacts_perso": [],
   "vitesse": 40,
   "rotation": 10,
-  "updated_at": "2026-10-09T10:59:13.259Z"
+  "updated_at": "2026-10-09T11:00:20.908Z"
 }
