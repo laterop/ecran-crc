@@ -16,7 +16,23 @@
   header{position:sticky;top:0;z-index:5;background:rgba(11,11,12,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:14px 20px;display:flex;align-items:center;gap:14px}
   header h1{font-size:22px}
   header .sp{flex:1}
-  main{max-width:860px;margin:0 auto;padding:22px 16px 120px;display:flex;flex-direction:column;gap:16px}
+  main{max-width:1320px;margin:0 auto;padding:22px 16px 120px;display:grid;grid-template-columns:minmax(0,1fr) 440px;gap:20px;align-items:start}
+  .settings{display:flex;flex-direction:column;gap:16px;min-width:0}
+  .pv{position:sticky;top:84px;display:flex;flex-direction:column;gap:10px}
+  .pv-box{background:#060607;border:1px solid var(--line);border-radius:12px;overflow:hidden;position:relative}
+  .pv-box iframe{border:0;transform-origin:0 0;display:block;position:absolute;left:0;top:0}
+  .pv-head{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--dim)}
+  .styles{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+  .sty{border:2px solid var(--line);border-radius:12px;padding:0;overflow:hidden;cursor:pointer;background:#0d0d0f;text-align:left;color:var(--ink)}
+  .sty.on{border-color:var(--ambre)}
+  .sty .sw{height:62px;display:flex;flex-direction:column;justify-content:center;padding:0 12px;gap:4px}
+  .sty .sw b{font-size:20px;line-height:1}
+  .sty .sw i{font-style:normal;font-size:11px;opacity:.8}
+  .sty .nm{padding:8px 12px;font-size:13px;border-top:1px solid var(--line)}
+  .sty .nm small{display:block;color:var(--dim);font-size:11px}
+  .row2{display:flex;gap:8px;align-items:center}
+  .row2 input{width:100px}
+  @media (max-width:1000px){main{grid-template-columns:1fr}.pv{position:static;order:-1}}
   .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
   .card h2{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);font-weight:600;margin-bottom:14px}
   label{display:block;font-size:13px;color:var(--dim);margin-bottom:6px}
@@ -74,17 +90,39 @@
     <button class="btn-main" id="save">Enregistrer</button>
   </header>
   <main>
+    <div class="settings">
     <div class="warn" id="localWarn" hidden>Repo GitHub non détecté (config.js vide et page hors GitHub Pages). Tu peux tester l'interface, mais rien ne sera enregistré.</div>
 
+        <section class="card">
+      <h2>Apparence</h2>
+      <label>Style</label>
+      <div class="styles" id="styles"></div>
+      <div class="grid" style="margin-top:14px">
+        <div><label for="disposition">Disposition</label><select id="disposition">
+          <option value="auto">Automatique selon la taille</option>
+          <option value="carrousel">Carrousel, une info à la fois (tuile)</option>
+          <option value="liste">Liste, tout à l'écran</option></select></div>
+        <div><label for="resolution">Résolution</label><select id="resolution">
+          <option value="auto">S'adapte à la fenêtre</option>
+          <option value="435x430">Tuile tableau de bord, 435 × 430</option>
+          <option value="1280x720">HD, 1280 × 720</option>
+          <option value="1920x1080">Full HD, 1920 × 1080</option>
+          <option value="1080x1920">Vertical, 1080 × 1920</option>
+          <option value="custom">Personnalisée</option></select></div>
+        <div id="customRes" hidden><label>Largeur × hauteur (px)</label><div class="row2"><input id="resW" type="number" min="100" max="4000"> <span>×</span> <input id="resH" type="number" min="100" max="4000"></div></div>
+        <div><label for="taille">Taille du texte <span id="tVal"></span></label><input id="taille" type="range" min="60" max="160" step="5"></div>
+      </div>
+      <div class="toggles" style="margin-top:14px">
+        <label class="tg"><input type="checkbox" id="cadre"> Cadre façon carte du tableau de bord</label>
+        <label class="tg"><input type="checkbox" id="horloge"> Afficher l'heure</label>
+      </div>
+      <p class="hint">Avec une résolution fixe, l'écran garde ses proportions et s'agrandit ou se réduit pour remplir la place disponible.</p>
+    </section>
     <section class="card">
       <h2>Général</h2>
       <div class="grid">
         <div><label for="titre">Titre</label><input id="titre" maxlength="30"></div>
-        <div><label for="sousTitre">Sous-titre (mode tuile)</label><input id="sousTitre" maxlength="30"></div>
-        <div><label for="affichage">Format d'affichage</label><select id="affichage">
-          <option value="auto">Automatique selon la taille</option>
-          <option value="tuile">Tuile du tableau de bord</option>
-          <option value="plein">Plein écran</option></select></div>
+        <div><label for="sousTitre">Sous-titre</label><input id="sousTitre" maxlength="30"></div>
         <div><label for="ouverture">Ouverture</label><input id="ouverture" type="time"></div>
         <div><label for="fermeture">Fermeture</label><input id="fermeture" type="time"></div>
       </div>
@@ -143,6 +181,12 @@
       </div>
       <p class="hint">Le rechargement sert après une mise à jour du site, ou si l'écran semble bloqué. Il se fait au prochain passage, 2 minutes max.</p>
     </section>
+    </div>
+    <aside class="pv">
+      <div class="pv-head"><span>Aperçu en direct, avant enregistrement</span><span id="pvSize"></span></div>
+      <div class="pv-box" id="pvBox"><iframe id="pv" title="Aperçu de l'écran" src="./?apercu=1"></iframe></div>
+      <p class="hint">L'aperçu suit chaque modif. L'écran du CRC ne change qu'après "Enregistrer".</p>
+    </aside>
   </main>
 </div>
 <div class="toast" id="toast"></div>
@@ -202,7 +246,16 @@ $('logout').onclick = () => { try{ localStorage.removeItem("crc_token"); }catch(
 function fill(){
   $('titre').value = S.titre||"";
   $('sousTitre').value = S.sous_titre ?? "Aujourd'hui";
-  $('affichage').value = S.affichage || "auto";
+  S.style = S.style || "led";
+  drawStyles();
+  $('disposition').value = S.disposition || ({tuile:"carrousel",plein:"liste"}[S.affichage]) || "auto";
+  $('resolution').value = S.resolution || "auto";
+  $('customRes').hidden = $('resolution').value !== "custom";
+  $('resW').value = S.res_w || 435; $('resH').value = S.res_h || 430;
+  $('taille').value = S.taille || 100; $('tVal').textContent = (S.taille||100) + " %";
+  $('cadre').checked = S.cadre !== false;
+  $('horloge').checked = S.horloge !== false;
+  READY = true; pushPreview();
   $('ouverture').value = S.ouverture; $('fermeture').value = S.fermeture;
   document.querySelectorAll('[data-bloc]').forEach(c => c.checked = !!S.blocs[c.dataset.bloc]);
   $('ville').value = S.ville; $('coords').textContent = `${S.lat}, ${S.lon}`;
@@ -246,6 +299,53 @@ $('msgs').addEventListener('click', e => {
 $('add').onclick = () => { S.messages.push({badge:"Info",texte:"",couleur:"ambre",actif:true}); drawMsgs(); document.querySelectorAll('.msg .txt').forEach((x,i,a)=>{ if(i===a.length-1) x.focus(); }); };
 $('vitesse').oninput = e => $('vVal').textContent = e.target.value;
 
+
+/* ---------- Apparence et aperçu ---------- */
+const STYLES = [
+  {id:"led",  nom:"Panneau LED", desc:"Façon Lumiplan, points ambre", bg:"#030303", c:"#ffb21e", c2:"#48ff72", f:"Doto,monospace", up:true},
+  {id:"dash", nom:"Tableau de bord", desc:"Sobre, comme tes autres cartes", bg:"#2a2a2e", c:"#f5b400", c2:"#3fb950", f:"Montserrat,sans-serif"},
+  {id:"gare", nom:"Quai de gare", desc:"Lettres blanches sur pavés noirs", bg:"#0c0d0f", c:"#ffd400", c2:"#ffffff", f:"Oswald,sans-serif", up:true},
+  {id:"term", nom:"Terminal rétro", desc:"Écran vert phosphore", bg:"#03110a", c:"#e6ff6b", c2:"#5dff86", f:"VT323,monospace"},
+  {id:"neon", nom:"Néon", desc:"Rose et cyan qui brillent", bg:"#120836", c:"#ff4fd8", c2:"#36f5ff", f:"Rajdhani,sans-serif", up:true}
+];
+function drawStyles(){
+  $('styles').innerHTML = STYLES.map(x=>`<button type="button" class="sty ${S.style===x.id?'on':''}" data-st="${x.id}">
+    <div class="sw" style="background:${x.bg};font-family:${x.f};${x.up?'text-transform:uppercase;':''}"><b style="color:${x.c}">11:21</b><i style="color:${x.c2}">Bonne fête aux Denis</i></div>
+    <div class="nm">${x.nom}<small>${x.desc}</small></div></button>`).join("");
+}
+$('styles').addEventListener('click', e => { const b = e.target.closest('[data-st]'); if(!b) return; S.style = b.dataset.st; drawStyles(); pushPreview(); });
+$('taille').oninput = e => { $('tVal').textContent = e.target.value + " %"; };
+$('resolution').onchange = () => { $('customRes').hidden = $('resolution').value !== "custom"; };
+
+function pvSize(){
+  const r = S.resolution || "auto";
+  if(r === "custom") return [+S.res_w||435, +S.res_h||430];
+  if(r !== "auto") return r.split("x").map(Number);
+  return S.disposition === "liste" ? [1280,720] : [435,430];
+}
+function sizePreview(){
+  const [w,h] = pvSize(), box = $('pvBox'), f = $('pv');
+  const bw = box.clientWidth || 440, sc = bw / w;
+  box.style.height = Math.round(h*sc) + "px";
+  f.style.width = w+"px"; f.style.height = h+"px"; f.style.transform = `scale(${sc})`;
+  $('pvSize').textContent = `${w} × ${h}` + ((S.resolution||"auto")==="auto" ? " (exemple)" : "");
+}
+let pvT, READY = false;
+function pushPreview(){
+  if(!READY) return;
+  clearTimeout(pvT);
+  pvT = setTimeout(()=>{
+    const data = JSON.parse(JSON.stringify(collect(true)));
+    sizePreview();
+    try{ $('pv').contentWindow.postMessage({type:"crc-preview", data}, "*"); }catch(e){}
+  }, 150);
+}
+$('pv').addEventListener('load', pushPreview);
+addEventListener('resize', sizePreview);
+document.querySelector('.settings').addEventListener('input', pushPreview);
+document.querySelector('.settings').addEventListener('change', pushPreview);
+document.querySelector('.settings').addEventListener('click', e => { if(e.target.closest('#msgs button,#add,#sugg')) setTimeout(pushPreview, 50); });
+
 /* ---------- Recherche de ville ---------- */
 let tmr;
 $('ville').oninput = e => {
@@ -266,16 +366,24 @@ $('ville').oninput = e => {
 };
 
 /* ---------- Enregistrement ---------- */
-function collect(){
+function collect(apercu){
   S.titre = $('titre').value.trim() || "Infos CRC";
   S.sous_titre = $('sousTitre').value.trim();
-  S.affichage = $('affichage').value;
+  S.disposition = $('disposition').value;
+  S.resolution = $('resolution').value;
+  S.res_w = Math.max(100, +$('resW').value || 435);
+  S.res_h = Math.max(100, +$('resH').value || 430);
+  S.taille = +$('taille').value || 100;
+  S.cadre = $('cadre').checked;
+  S.horloge = $('horloge').checked;
+  delete S.affichage;
   S.ouverture = $('ouverture').value || "08:30";
   S.fermeture = $('fermeture').value || "18:30";
   document.querySelectorAll('[data-bloc]').forEach(c => S.blocs[c.dataset.bloc] = c.checked);
   S.funfacts_perso = $('facts').value.split("\n").map(s=>s.trim()).filter(Boolean);
   S.vitesse = +$('vitesse').value;
   S.rotation = Math.max(3, +$('rotation').value || 10);
+  if(apercu) return Object.assign({}, S, {messages: S.messages.filter(m => (m.texte||"").trim())});
   S.messages = S.messages.filter(m => (m.texte||"").trim());
   return S;
 }

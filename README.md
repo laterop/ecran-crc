@@ -1,6 +1,6 @@
 # Écran CRC
 
-Widget plein écran style panneau LED (horloge, météo, fête du jour, avancement de la semaine du lundi au samedi, messages, fun facts) avec une page d'admin.
+Widget d'affichage (5 styles : panneau LED, tableau de bord, quai de gare, terminal rétro, néon) (horloge, météo, fête du jour, avancement de la semaine du lundi au samedi, messages, fun facts) avec une page d'admin.
 
 - `index.html` : l'écran, à ouvrir en plein écran sur le poste du CRC
 - `admin.html` : la page pour modifier ce qui s'affiche
@@ -22,3 +22,7 @@ L'admin enregistre directement dans `data.json` via l'API GitHub. Il faut une cl
 4. Colle la clé sur la page admin, elle reste dans ce navigateur seulement
 
 L'écran relit `data.json` toutes les 2 minutes.
+
+## Apparence
+
+Tout se règle dans l'admin : style, disposition (carrousel ou liste), résolution (auto, tuile 435 × 430, HD, Full HD, vertical, personnalisée), taille du texte, cadre façon carte et horloge. Un aperçu en direct montre le rendu avant d'enregistrer.
