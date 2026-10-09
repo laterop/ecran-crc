@@ -79,7 +79,12 @@
     <section class="card">
       <h2>Général</h2>
       <div class="grid">
-        <div><label for="titre">Titre de l'écran</label><input id="titre" maxlength="30"></div>
+        <div><label for="titre">Titre</label><input id="titre" maxlength="30"></div>
+        <div><label for="sousTitre">Sous-titre (mode tuile)</label><input id="sousTitre" maxlength="30"></div>
+        <div><label for="affichage">Format d'affichage</label><select id="affichage">
+          <option value="auto">Automatique selon la taille</option>
+          <option value="tuile">Tuile du tableau de bord</option>
+          <option value="plein">Plein écran</option></select></div>
         <div><label for="ouverture">Ouverture</label><input id="ouverture" type="time"></div>
         <div><label for="fermeture">Fermeture</label><input id="fermeture" type="time"></div>
       </div>
@@ -132,7 +137,11 @@
     <section class="card">
       <h2>Connexion</h2>
       <p class="hint" style="margin:0 0 10px">Les modifs sont enregistrées dans le fichier data.json du repo <b id="repoName"></b>. L'écran les récupère en 2 minutes max.</p>
-      <button id="logout">Oublier la clé sur ce navigateur</button>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button id="reload">Forcer l'écran à se recharger</button>
+        <button id="logout">Oublier la clé sur ce navigateur</button>
+      </div>
+      <p class="hint">Le rechargement sert après une mise à jour du site, ou si l'écran semble bloqué. Il se fait au prochain passage, 2 minutes max.</p>
     </section>
   </main>
 </div>
@@ -192,6 +201,8 @@ $('logout').onclick = () => { try{ localStorage.removeItem("crc_token"); }catch(
 /* ---------- Formulaire ---------- */
 function fill(){
   $('titre').value = S.titre||"";
+  $('sousTitre').value = S.sous_titre ?? "Aujourd'hui";
+  $('affichage').value = S.affichage || "auto";
   $('ouverture').value = S.ouverture; $('fermeture').value = S.fermeture;
   document.querySelectorAll('[data-bloc]').forEach(c => c.checked = !!S.blocs[c.dataset.bloc]);
   $('ville').value = S.ville; $('coords').textContent = `${S.lat}, ${S.lon}`;
@@ -256,7 +267,9 @@ $('ville').oninput = e => {
 
 /* ---------- Enregistrement ---------- */
 function collect(){
-  S.titre = $('titre').value.trim() || "CRC";
+  S.titre = $('titre').value.trim() || "Infos CRC";
+  S.sous_titre = $('sousTitre').value.trim();
+  S.affichage = $('affichage').value;
   S.ouverture = $('ouverture').value || "08:30";
   S.fermeture = $('fermeture').value || "18:30";
   document.querySelectorAll('[data-bloc]').forEach(c => S.blocs[c.dataset.bloc] = c.checked);
@@ -266,6 +279,7 @@ function collect(){
   S.messages = S.messages.filter(m => (m.texte||"").trim());
   return S;
 }
+$('reload').onclick = () => { S.reload = Date.now(); $('save').click(); };
 $('save').onclick = async () => {
   const data = collect();
   if(LOCAL){ toast("Repo non détecté, rien n'est enregistré"); return; }

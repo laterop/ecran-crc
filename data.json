@@ -1,5 +1,8 @@
 {
-  "titre": "CRC",
+  "titre": "Infos CRC",
+  "sous_titre": "Aujourd'hui",
+  "affichage": "auto",
+  "reload": null,
   "ville": "Montpellier",
   "lat": 43.6108,
   "lon": 3.8767,

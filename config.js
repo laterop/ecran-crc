@@ -13,7 +13,10 @@ window.CRC_CONFIG = {
 
 // Valeurs par défaut si data.json est vide ou injoignable
 window.CRC_DEFAULTS = {
-  titre: "CRC",
+  titre: "Infos CRC",
+  sous_titre: "Aujourd'hui",
+  affichage: "auto",
+  reload: null,
   ville: "Montpellier",
   lat: 43.6108,
   lon: 3.8767,
