@@ -8,7 +8,7 @@
   "blocs": {
     "meteo": false,
     "fete": true,
-    "semaine": false,
+    "semaine": true,
     "funfacts": false
   },
   "messages": [],
@@ -18,5 +18,5 @@
   "sous_titre": "Aujourd'hui",
   "affichage": "auto",
   "reload": null,
-  "updated_at": "2026-10-09T09:12:32.024Z"
+  "updated_at": "2026-10-09T09:13:22.288Z"
 }
