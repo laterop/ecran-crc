@@ -11,19 +11,12 @@
     "semaine": false,
     "funfacts": false
   },
-  "messages": [
-    {
-      "badge": "Info",
-      "texte": "Bienvenue sur l'écran du CRC",
-      "couleur": "ambre",
-      "actif": true
-    }
-  ],
+  "messages": [],
   "funfacts_perso": [],
   "vitesse": 60,
   "rotation": 10,
   "sous_titre": "Aujourd'hui",
   "affichage": "auto",
   "reload": null,
-  "updated_at": "2026-10-09T09:10:38.622Z"
+  "updated_at": "2026-10-09T09:10:43.542Z"
 }
