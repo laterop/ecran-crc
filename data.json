@@ -1,13 +1,13 @@
 {
-  "titre": "Infos CRC",
+  "titre": "CRC MONTPELLIER",
   "ville": "Montpellier",
   "lat": 43.6108,
   "lon": 3.8767,
-  "ouverture": "08:30",
-  "fermeture": "18:30",
+  "ouverture": "07:00",
+  "fermeture": "20:30",
   "blocs": {
     "meteo": false,
-    "fete": false,
+    "fete": true,
     "semaine": false,
     "funfacts": false
   },
@@ -18,5 +18,5 @@
   "sous_titre": "Aujourd'hui",
   "affichage": "auto",
   "reload": null,
-  "updated_at": "2026-10-09T09:11:48.999Z"
+  "updated_at": "2026-10-09T09:12:32.024Z"
 }
