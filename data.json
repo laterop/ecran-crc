@@ -9,7 +9,7 @@
   "resolution": "auto",
   "res_w": 435,
   "res_h": 430,
-  "reload": 1791541553252,
+  "reload": 1791543449426,
   "ville": "Montpellier",
   "lat": 43.6108,
   "lon": 3.8767,
@@ -26,13 +26,25 @@
       "badge": "Info",
       "texte": "Ben est fatigué, c'est normal on est vendredi",
       "couleur": "rouge",
+      "actif": false
+    },
+    {
+      "badge": "TRAFIC",
+      "texte": "Réseau SNCF: Normal",
+      "couleur": "vert",
       "actif": true
     },
     {
-      "badge": "Incroyable",
-      "texte": "Oui je peux écrire ce que je veux",
+      "badge": "TRAFIC",
+      "texte": "Réseau Sankéo : Perturbations en cours",
+      "couleur": "rouge",
+      "actif": true
+    },
+    {
+      "badge": "TRAFIC",
+      "texte": "Réseau TANGO : Perturbations habituelle",
       "couleur": "ambre",
-      "actif": false
+      "actif": true
     }
   ],
   "funfacts_perso": [
@@ -40,5 +52,5 @@
   ],
   "vitesse": 40,
   "rotation": 10,
-  "updated_at": "2026-10-09T10:25:53.252Z"
+  "updated_at": "2026-10-09T10:57:29.426Z"
 }
