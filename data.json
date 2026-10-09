@@ -9,7 +9,7 @@
   "resolution": "auto",
   "res_w": 435,
   "res_h": 430,
-  "reload": 1791546858462,
+  "reload": 1791547397797,
   "ville": "Montpellier",
   "lat": 43.6108,
   "lon": 3.8767,
@@ -47,8 +47,13 @@
     "messages"
   ],
   "lignes": 5,
-  "anniversaires": [],
-  "anniv_avance": 3,
+  "anniversaires": [
+    {
+      "prenom": "Perrine",
+      "date": "10-18"
+    }
+  ],
+  "anniv_avance": 15,
   "rebours": [
     {
       "titre": "Noël",
@@ -93,5 +98,5 @@
   "funfacts_perso": [],
   "vitesse": 40,
   "rotation": 10,
-  "updated_at": "2026-10-09T11:54:18.462Z"
+  "updated_at": "2026-10-09T12:03:17.797Z"
 }
