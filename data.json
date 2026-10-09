@@ -7,7 +7,7 @@
   "fermeture": "18:30",
   "blocs": {
     "meteo": false,
-    "fete": true,
+    "fete": false,
     "semaine": false,
     "funfacts": false
   },
@@ -18,5 +18,5 @@
   "sous_titre": "Aujourd'hui",
   "affichage": "auto",
   "reload": null,
-  "updated_at": "2026-10-09T09:10:43.542Z"
+  "updated_at": "2026-10-09T09:11:48.999Z"
 }
