@@ -18,7 +18,8 @@ window.MODULES = [
   { id:"citation",  nom:"Citation du jour" },
   { id:"histoire",  nom:"Ce jour-là dans l'histoire" },
   { id:"messages",  nom:"Messages" },
-  { id:"images",    nom:"Images" }
+  { id:"images",    nom:"Images" },
+  { id:"gif",       nom:"GIF du jour" }
 ];
 
 const DAY = 864e5;
@@ -103,6 +104,35 @@ async function loadHistoire(){
     HIST = list.filter(e => e.text && e.year && e.text.length < 200).map(e => ({ an:e.year, txt:e.text.replace(/\s+/g," ").trim() }));
     HIST_JOUR = mm+jj;
   }catch(e){ HIST = null; }
+}
+
+/* ---------- GIF du jour ---------- */
+const GIF_THEMES = ["weekend","monday","coffee","wednesday","almost friday","friday","weekend"];
+let GIF = null, GIF_CLE = "";
+function jourAn(d){ return Math.floor((minuit(d) - new Date(d.getFullYear(),0,0)) / DAY); }
+async function loadGif(){
+  const d = new Date(), src = S.gif_source || "liste";
+  if(src !== "giphy" || !S.giphy_cle){ GIF = null; GIF_CLE = ""; return; }
+  const mots = (S.gif_themes && S.gif_themes.length===7) ? S.gif_themes : GIF_THEMES;
+  const q = (mots[d.getDay()] || "fun").trim() || "fun";
+  const cle = d.toDateString() + "|" + q + "|" + S.giphy_cle;
+  if(GIF_CLE === cle && GIF) return;
+  try{
+    const u = `https://api.giphy.com/v1/gifs/search?api_key=${encodeURIComponent(S.giphy_cle)}&q=${encodeURIComponent(q)}&limit=30&rating=g&lang=fr`;
+    const j = await (await fetch(u)).json();
+    const list = (j.data||[]).filter(g => g.images && (g.images.downsized_medium || g.images.original));
+    if(!list.length){ GIF = null; return; }
+    const g = list[jourAn(d) % list.length], im = g.images.downsized_medium || g.images.original;
+    GIF = { url: im.url, titre: "", giphy: true };
+    GIF_CLE = cle;
+  }catch(e){ GIF = null; }
+}
+function gifDuJour(d){
+  if((S.gif_source || "liste") === "giphy") return GIF;
+  const l = (S.gifs||[]).filter(g => g.url && g.actif !== false);
+  if(!l.length) return null;
+  const g = l[jourAn(d) % l.length];
+  return { url:g.url, titre:g.legende||"" };
 }
 
 /* ---------- Citations ---------- */
@@ -271,6 +301,17 @@ function lignesModule(id, d){
           const src = String(im.url).replace(/"/g,"%22");
           out.push(`<div class="row imgrow fade"><img class="${im.ajust==="remplir"?"remplir":"contenir"}" src="${src}" alt="${esc(im.legende||"")}" onerror="this.closest('.row').style.visibility='hidden'">${im.legende?`<div class="cap">${esc(im.legende)}</div>`:""}</div>`);
         });
+      break;
+
+    case "gif":
+      if(B.gif !== false){
+        const g = gifDuJour(d);
+        if(g){
+          const src = String(g.url).replace(/"/g,"%22");
+          const cap = [S.gif_titre ?? "GIF du jour", g.titre].filter(Boolean).join(" · ");
+          out.push(`<div class="row imgrow gifrow fade"><img class="contenir" src="${src}" alt="${esc(cap)}" onerror="this.closest('.row').style.visibility='hidden'">${cap?`<div class="cap">${esc(cap)}</div>`:""}${g.giphy?`<div class="giphy">Powered by GIPHY</div>`:""}</div>`);
+        }
+      }
       break;
 
     case "messages":

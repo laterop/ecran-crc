@@ -196,6 +196,31 @@
       </div>
 
       <div class="sub">
+        <h3>GIF du jour</h3>
+        <div class="grid">
+          <div><label for="gifSrc">Source</label><select id="gifSrc">
+            <option value="liste">Ma liste, un GIF différent chaque jour</option>
+            <option value="giphy">Giphy automatique, selon le jour</option></select></div>
+          <div><label for="gifTitre">Légende affichée</label><input id="gifTitre" maxlength="40" placeholder="GIF du jour"></div>
+        </div>
+        <div id="gifListe" style="margin-top:12px">
+          <div class="lst" id="gifList"></div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <label class="btn-file"><input type="file" id="gifFile" accept="image/gif,image/webp" multiple hidden>+ Envoyer des GIFs</label>
+            <button type="button" id="gifUrl">+ Ajouter par lien</button>
+          </div>
+          <p class="hint">Pour un lien Giphy, colle directement l'adresse de la page, je la convertis. Pour Tenor ou ailleurs, fais clic droit sur le GIF puis "Copier l'adresse de l'image". Les GIFs tournent dans l'ordre, un par jour.</p>
+        </div>
+        <div id="gifGiphy" style="margin-top:12px" hidden>
+          <label for="gifCle">Clé API Giphy</label>
+          <input id="gifCle" autocomplete="off" placeholder="Colle ta clé ici">
+          <p class="hint">Gratuite sur <a href="https://developers.giphy.com/dashboard/" target="_blank" style="color:var(--ambre)">developers.giphy.com</a> : crée une app de type "API", copie la clé. Elle sera lisible dans le repo public, c'est prévu comme ça chez Giphy mais n'y mets rien d'autre. Seuls les GIFs classés tout public sont pris.</p>
+          <label style="margin-top:10px">Thème de recherche par jour (en anglais, ça marche mieux)</label>
+          <div class="grid" id="gifJours"></div>
+        </div>
+      </div>
+
+      <div class="sub">
         <h3>Citations perso</h3>
         <label for="cits">Une par ligne, elles s'ajoutent à celles intégrées (une citation différente chaque jour)</label>
         <textarea id="cits" placeholder="Un appel à la fois, un sourire à chaque fois"></textarea>
@@ -320,7 +345,10 @@ function fill(){
   $('cadre').checked = S.cadre !== false;
   $('horloge').checked = S.horloge !== false;
   $('entete').checked = S.entete !== false;
-  drawImgs();
+  drawImgs(); drawGifs(); drawGifJours();
+  $('gifSrc').value = S.gif_source || "liste"; gifSrcUI();
+  $('gifTitre').value = S.gif_titre ?? "GIF du jour";
+  $('gifCle').value = S.giphy_cle || "";
   READY = true; pushPreview();
   $('ouverture').value = S.ouverture; $('fermeture').value = S.fermeture;
   document.querySelectorAll('[data-bloc]').forEach(c => c.checked = !!S.blocs[c.dataset.bloc]);
@@ -546,6 +574,74 @@ async function purgerImages(){
   A_SUPPRIMER = reste;
 }
 
+
+/* ---------- GIF du jour ---------- */
+const JOURS = ["Dimanche","Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi"];
+function gifSrcUI(){ const g = $('gifSrc').value === "giphy"; $('gifGiphy').hidden = !g; $('gifListe').hidden = g; }
+$('gifSrc').onchange = gifSrcUI;
+function drawGifJours(){
+  const t = (S.gif_themes && S.gif_themes.length===7) ? S.gif_themes : window.CRC_DEFAULTS.gif_themes;
+  $('gifJours').innerHTML = [1,2,3,4,5,6,0].map(i=>`<div><label for="gj${i}">${JOURS[i]}</label><input id="gj${i}" data-gj="${i}" value="${esc(t[i]||'')}" maxlength="30"></div>`).join("");
+}
+function drawGifs(){
+  S.gifs = S.gifs || [];
+  $('gifList').innerHTML = S.gifs.map((g,i)=>`<div class="it img ${g.actif===false?'off':''}">
+    <img src="${esc(g.url)}" alt="">
+    <input data-gf="${i}" data-k="legende" value="${esc(g.legende||'')}" placeholder="Petit texte (facultatif)" maxlength="60" aria-label="Texte">
+    <span></span>
+    <div class="acts">
+      <button type="button" data-gfa="toggle" data-i="${i}" title="Activer ou masquer">${g.actif===false?'Off':'On'}</button>
+      <button type="button" data-gfa="up" data-i="${i}" title="Monter">↑</button>
+      <button type="button" data-gfa="down" data-i="${i}" title="Descendre">↓</button>
+      <button type="button" data-gfa="del" data-i="${i}" title="Supprimer">✕</button>
+    </div></div>`).join("") || `<p class="hint">Aucun GIF pour l'instant.</p>`;
+}
+$('gifList').addEventListener('input', e => { const t = e.target; if(t.dataset.gf!==undefined) S.gifs[+t.dataset.gf][t.dataset.k] = t.value; });
+$('gifList').addEventListener('click', e => {
+  const b = e.target.closest('[data-gfa]'); if(!b) return;
+  const i = +b.dataset.i, L = S.gifs, a = b.dataset.gfa;
+  if(a==="toggle") L[i].actif = L[i].actif===false;
+  if(a==="up" && i>0) [L[i-1],L[i]]=[L[i],L[i-1]];
+  if(a==="down" && i<L.length-1) [L[i+1],L[i]]=[L[i],L[i+1]];
+  if(a==="del"){ const [x] = L.splice(i,1); if(x && x.path && x.sha) A_SUPPRIMER.push({path:x.path, sha:x.sha}); }
+  drawGifs(); pushPreview();
+});
+function lienGif(u){
+  u = u.trim();
+  const m = u.match(/giphy\.com\/(?:gifs|stickers|clips)\/(?:[^\/?#]*-)?([A-Za-z0-9]+)(?:[\/?#]|$)/);
+  if(m && !/media\d*\.giphy\.com/.test(u)) return `https://media.giphy.com/media/${m[1]}/giphy.gif`;
+  return u;
+}
+$('gifUrl').onclick = () => {
+  const u = lienGif(prompt("Lien du GIF (page Giphy ou adresse de l'image)") || "");
+  if(!/^https:\/\/\S+$/i.test(u)){ if(u) toast("Le lien doit commencer par https://"); return; }
+  S.gifs = S.gifs||[]; S.gifs.push({url:u, legende:"", actif:true}); drawGifs(); pushPreview();
+};
+$('gifFile').onchange = async e => {
+  const files = [...e.target.files]; e.target.value = "";
+  if(!files.length) return;
+  if(LOCAL){ toast("Repo non détecté, envoi impossible ici"); return; }
+  const lab = $('gifFile').parentElement; lab.classList.add('busy');
+  for(const f of files){
+    try{
+      if(f.size > 10e6) throw new Error(f.name + " dépasse 10 Mo");
+      toast("Envoi de " + f.name + "…");
+      const ext = f.type === "image/webp" ? "webp" : "gif";
+      const nom = (f.name.replace(/\.[^.]+$/,"").toLowerCase().normalize("NFD").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"").slice(0,40)) || "gif";
+      const path = `images/gifs/${Date.now()}-${nom}.${ext}`;
+      const r = await fetch(`https://api.github.com/repos/${REPO}/contents/${path}`, {method:"PUT", headers:H(),
+        body:JSON.stringify({message:"Ajout d'un GIF pour l'écran CRC", branch:CFG.BRANCH||"main", content:await blobB64(f)})});
+      if(!r.ok){ const j = await r.json().catch(()=>({})); throw new Error(j.message || ("GitHub répond "+r.status)); }
+      const j = await r.json();
+      S.gifs = S.gifs||[];
+      S.gifs.push({url:`https://raw.githubusercontent.com/${REPO}/${CFG.BRANCH||"main"}/${path}`, path, sha:j.content.sha, legende:"", actif:true});
+      drawGifs(); pushPreview();
+    }catch(err){ toast("Échec de l'envoi : " + err.message); }
+  }
+  lab.classList.remove('busy');
+  toast("GIF ajouté, pense à Enregistrer");
+};
+
 /* ---------- Recherche de ville ---------- */
 let tmr;
 $('ville').oninput = e => {
@@ -577,6 +673,10 @@ function collect(apercu){
   S.cadre = $('cadre').checked;
   S.horloge = $('horloge').checked;
   S.entete = $('entete').checked;
+  S.gif_source = $('gifSrc').value;
+  S.gif_titre = $('gifTitre').value.trim();
+  S.giphy_cle = $('gifCle').value.trim();
+  S.gif_themes = [0,1,2,3,4,5,6].map(i => ($('gj'+i)?.value || "").trim() || window.CRC_DEFAULTS.gif_themes[i]);
   delete S.affichage;
   S.ouverture = $('ouverture').value || "08:30";
   S.fermeture = $('fermeture').value || "18:30";

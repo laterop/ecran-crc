@@ -29,4 +29,4 @@ Tout se règle dans l'admin : style, disposition (carrousel ou liste), résoluti
 
 ## Modules
 
-Météo, prévisions 3 jours, fête du jour, anniversaires, comptes à rebours, objectif du jour, avancement de la semaine, jours fériés et ponts, vacances scolaires zone C (API data.education.gouv.fr), soleil et lune, citation du jour, éphéméride (Wikipédia), messages, images (envoyées depuis l'admin dans le dossier `images/`). Chacun s'active et se range dans l'admin. Le code est dans `modules.js`.
+Météo, prévisions 3 jours, fête du jour, anniversaires, comptes à rebours, objectif du jour, avancement de la semaine, jours fériés et ponts, vacances scolaires zone C (API data.education.gouv.fr), soleil et lune, citation du jour, éphéméride (Wikipédia), messages, images (envoyées depuis l'admin dans le dossier `images/`), GIF du jour (ta liste ou Giphy avec ta clé, un thème par jour de la semaine). Chacun s'active et se range dans l'admin. Le code est dans `modules.js`.

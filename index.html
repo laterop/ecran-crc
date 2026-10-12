@@ -204,6 +204,7 @@
     background:linear-gradient(transparent,rgba(0,0,0,.75));color:#fff;font-size:calc(var(--u)*4);text-align:center;text-shadow:0 1px 3px rgba(0,0,0,.6)}
   .lay-liste .imgrow .cap{font-size:calc(var(--u)*3.4)}
   body.page-image .big, body.page-image .ticker{display:none}
+  .imgrow .giphy{position:absolute;top:calc(var(--u)*1);right:calc(var(--u)*1.4);font:600 calc(var(--u)*1.6) Inter,sans-serif;color:#fff;opacity:.7;text-transform:none;letter-spacing:0;text-shadow:0 1px 2px #000}
   body.page-image.lay-carrousel .screen{border-color:transparent}
   body.sans-horloge.lay-carrousel .big{justify-content:center}
   body.sans-horloge.lay-carrousel .big .d{text-align:center}
@@ -383,6 +384,7 @@ function applyData(data){
   S.blocs = Object.assign({}, window.CRC_DEFAULTS.blocs, (data||{}).blocs||{});
   layout(); buildTicker(); render(); tick();
   if(S.ville!==ville || S.lat!==lat || S.lon!==lon || !meteo) loadMeteo();
+  if(typeof loadGif === 'function') loadGif().then(render);
 }
 async function loadData(){
   if(PREVIEW) return;
@@ -464,7 +466,7 @@ layout(); tick(); setInterval(tick, 1000);
   if(window.parent !== window) PREVIEW = new URLSearchParams(location.search).has("apercu");
   if(!PREVIEW) await loadData();
   if(!meteo) loadMeteo();
-  const annexes = async () => { await Promise.all([loadVacances(), loadHistoire()]); render(); };
+  const annexes = async () => { await Promise.all([loadVacances(), loadHistoire(), loadGif()]); render(); };
   annexes(); setInterval(annexes, 60*60*1000);
   buildTicker(); render();
   setInterval(loadData, 60*1000);
