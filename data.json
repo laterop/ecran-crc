@@ -9,7 +9,7 @@
   "resolution": "auto",
   "res_w": 435,
   "res_h": 430,
-  "reload": 1791814873203,
+  "reload": 1791814911932,
   "ville": "Montpellier",
   "lat": 43.6108,
   "lon": 3.8767,
@@ -104,5 +104,5 @@
   "funfacts_perso": [],
   "vitesse": 40,
   "rotation": 10,
-  "updated_at": "2026-10-12T14:21:13.203Z"
+  "updated_at": "2026-10-12T14:21:51.932Z"
 }
