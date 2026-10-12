@@ -1,7 +1,7 @@
 {
   "titre": "CRC MONTPELLIER",
   "sous_titre": "Aujourd'hui",
-  "style": "med",
+  "style": "clair",
   "disposition": "carrousel",
   "cadre": false,
   "horloge": true,
@@ -10,7 +10,7 @@
   "resolution": "auto",
   "res_w": 435,
   "res_h": 430,
-  "reload": 1791816281218,
+  "reload": 1791817141256,
   "ville": "Montpellier",
   "lat": 43.6108,
   "lon": 3.8767,
@@ -18,21 +18,21 @@
   "fermeture": "20:30",
   "blocs": {
     "meteo": true,
-    "previsions": true,
-    "fete": true,
-    "anniv": true,
-    "rebours": true,
+    "previsions": false,
+    "fete": false,
+    "anniv": false,
+    "rebours": false,
     "objectif": false,
-    "semaine": true,
-    "feries": true,
-    "vacances": true,
-    "soleil": true,
-    "citation": true,
-    "histoire": true,
-    "messages": true,
-    "images": true,
+    "semaine": false,
+    "feries": false,
+    "vacances": false,
+    "soleil": false,
+    "citation": false,
+    "histoire": false,
+    "messages": false,
+    "images": false,
     "gif": true,
-    "funfacts": true
+    "funfacts": false
   },
   "ordre": [
     "meteo",
@@ -57,9 +57,9 @@
   "giphy_cle": "MlDAk4EUP5vo423jtfpNHQMCRoY0H3Yk",
   "gif_themes": [
     "sleep",
-    "monday",
-    "coffee",
-    "wednesday",
+    "Shrek",
+    "Winx",
+    "LadyBug",
     "almost friday",
     "friday",
     "weekend"
@@ -123,5 +123,5 @@
   "funfacts_perso": [],
   "vitesse": 50,
   "rotation": 5,
-  "updated_at": "2026-10-12T14:44:41.218Z"
+  "updated_at": "2026-10-12T14:59:01.256Z"
 }
