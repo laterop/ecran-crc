@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Admin écran CRC</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Doto:wght@900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Doto:wght@900&family=Inter:wght@400;500;600;700&family=Oswald:wght@600&family=VT323&family=Rajdhani:wght@700&family=Montserrat:wght@700&family=Caveat:wght@700&family=Playfair+Display:wght@800&family=Josefin+Sans:wght@700&family=Orbitron:wght@800&display=swap" rel="stylesheet">
 <style>
   :root{--bg:#0b0b0c;--card:#141416;--line:#26262a;--ink:#f2efe6;--dim:#9a978f;--ambre:#ffb21e;--vert:#48ff72;--rouge:#ff3d3d;--bleu:#3fb8ff;--blanc:#f2efe6}
   *{box-sizing:border-box;margin:0;padding:0}
@@ -33,6 +33,13 @@
   .row2{display:flex;gap:8px;align-items:center}
   .row2 input{width:100px}
   .mods{display:flex;flex-direction:column;gap:6px}
+  .it.img{grid-template-columns:64px 1fr 130px auto}
+  .it.img img{width:64px;height:44px;object-fit:cover;border-radius:6px;background:#000;display:block}
+  .it.img.off{opacity:.45}
+  .it.img .acts{display:flex;gap:4px}.it.img .acts button{padding:7px 9px}
+  .btn-file{display:inline-block;cursor:pointer;border-radius:9px;border:1px solid var(--line);background:#1d1d21;color:var(--ink);padding:9px 14px;margin:0;font-size:15px}
+  .btn-file.busy{opacity:.6;pointer-events:none}
+  @media (max-width:640px){.it.img{grid-template-columns:64px 1fr}}
   .mod{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:10px;padding:8px 10px;border:1px solid var(--line);border-radius:10px}
   .mod.off{opacity:.5}
   .mod input{width:18px;height:18px;accent-color:var(--ambre)}
@@ -127,6 +134,7 @@
       <div class="toggles" style="margin-top:14px">
         <label class="tg"><input type="checkbox" id="cadre"> Cadre façon carte du tableau de bord</label>
         <label class="tg"><input type="checkbox" id="horloge"> Afficher l'heure</label>
+        <label class="tg"><input type="checkbox" id="entete"> Afficher le titre en haut</label>
       </div>
       <p class="hint">Avec une résolution fixe, l'écran garde ses proportions et s'agrandit ou se réduit pour remplir la place disponible.</p>
     </section>
@@ -175,6 +183,16 @@
           <div><label for="objC">Cible</label><input id="objC" type="number" step="any"></div>
           <div><label for="objU">Unité</label><input id="objU" maxlength="10" placeholder=" %"></div>
         </div>
+      </div>
+
+      <div class="sub">
+        <h3>Images</h3>
+        <div class="lst" id="imgList"></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <label class="btn-file"><input type="file" id="imgFile" accept="image/*" multiple hidden>+ Ajouter depuis mon ordi</label>
+          <button type="button" id="imgUrl">+ Ajouter par lien</button>
+        </div>
+        <p class="hint">Chaque image s'affiche en plein sur sa propre page, avec une légende si tu veux. Elle est réduite automatiquement et stockée dans le repo, donc visible publiquement : pas de photos de collègues sans leur accord.</p>
       </div>
 
       <div class="sub">
@@ -301,6 +319,8 @@ function fill(){
   $('taille').value = S.taille || 100; $('tVal').textContent = (S.taille||100) + " %";
   $('cadre').checked = S.cadre !== false;
   $('horloge').checked = S.horloge !== false;
+  $('entete').checked = S.entete !== false;
+  drawImgs();
   READY = true; pushPreview();
   $('ouverture').value = S.ouverture; $('fermeture').value = S.fermeture;
   document.querySelectorAll('[data-bloc]').forEach(c => c.checked = !!S.blocs[c.dataset.bloc]);
@@ -358,7 +378,12 @@ const STYLES = [
   {id:"dash", nom:"Tableau de bord", desc:"Sobre, comme tes autres cartes", bg:"#2a2a2e", c:"#f5b400", c2:"#3fb950", f:"Montserrat,sans-serif"},
   {id:"gare", nom:"Quai de gare", desc:"Lettres blanches sur pavés noirs", bg:"#0c0d0f", c:"#ffd400", c2:"#ffffff", f:"Oswald,sans-serif", up:true},
   {id:"term", nom:"Terminal rétro", desc:"Écran vert phosphore", bg:"#03110a", c:"#e6ff6b", c2:"#5dff86", f:"VT323,monospace"},
-  {id:"neon", nom:"Néon", desc:"Rose et cyan qui brillent", bg:"#120836", c:"#ff4fd8", c2:"#36f5ff", f:"Rajdhani,sans-serif", up:true}
+  {id:"neon", nom:"Néon", desc:"Rose et cyan qui brillent", bg:"#120836", c:"#ff4fd8", c2:"#36f5ff", f:"Rajdhani,sans-serif", up:true},
+  {id:"clair", nom:"Clair", desc:"Fond blanc, net et lisible", bg:"#ffffff", c:"#c26a00", c2:"#16181d", f:"Inter,sans-serif"},
+  {id:"craie", nom:"Tableau à craie", desc:"Écrit à la main sur ardoise", bg:"#22352b", c:"#ffd98a", c2:"#f3f1e7", f:"Caveat,cursive"},
+  {id:"journal", nom:"Journal", desc:"Papier crème, titres à empattements", bg:"#f3ecdc", c:"#a3361f", c2:"#1a1714", f:"'Playfair Display',serif"},
+  {id:"med", nom:"Méditerranée", desc:"Bleu mer et sable chaud", bg:"#0e4a6e", c:"#ffc66b", c2:"#fdf6e7", f:"'Josefin Sans',sans-serif", up:true},
+  {id:"retro", nom:"Rétro 80s", desc:"Synthwave, grille et dégradé", bg:"#14052b", c:"#ffb347", c2:"#2de2e6", f:"Orbitron,sans-serif", up:true}
 ];
 function drawStyles(){
   $('styles').innerHTML = STYLES.map(x=>`<button type="button" class="sty ${S.style===x.id?'on':''}" data-st="${x.id}">
@@ -445,6 +470,82 @@ $('annList').addEventListener('input', e => { const t = e.target; if(t.dataset.a
 $('annList').addEventListener('click', e => { const b = e.target.closest('[data-adel]'); if(!b) return; S.anniversaires.splice(+b.dataset.adel,1); drawAnn(); pushPreview(); });
 $('annAdd').onclick = () => { S.anniversaires = S.anniversaires||[]; S.anniversaires.push({prenom:"",date:"01-01"}); drawAnn(); };
 
+
+/* ---------- Images ---------- */
+let A_SUPPRIMER = [];
+function drawImgs(){
+  S.images = S.images || [];
+  $('imgList').innerHTML = S.images.map((im,i)=>`<div class="it img ${im.actif===false?'off':''}">
+    <img src="${esc(im.url)}" alt="">
+    <input data-g="${i}" data-k="legende" value="${esc(im.legende||'')}" placeholder="Légende (facultatif)" maxlength="80" aria-label="Légende">
+    <select data-g="${i}" data-k="ajust" aria-label="Ajustement"><option value="contenir" ${im.ajust!=='remplir'?'selected':''}>Image entière</option><option value="remplir" ${im.ajust==='remplir'?'selected':''}>Remplir l'écran</option></select>
+    <div class="acts">
+      <button type="button" data-ga="toggle" data-i="${i}" title="Afficher ou masquer">${im.actif===false?'Off':'On'}</button>
+      <button type="button" data-ga="up" data-i="${i}" title="Monter">↑</button>
+      <button type="button" data-ga="down" data-i="${i}" title="Descendre">↓</button>
+      <button type="button" data-ga="del" data-i="${i}" title="Supprimer">✕</button>
+    </div></div>`).join("") || `<p class="hint">Aucune image pour l'instant.</p>`;
+}
+$('imgList').addEventListener('input', e => { const t = e.target; if(t.dataset.g!==undefined) S.images[+t.dataset.g][t.dataset.k] = t.value; });
+$('imgList').addEventListener('click', e => {
+  const b = e.target.closest('[data-ga]'); if(!b) return;
+  const i = +b.dataset.i, L = S.images, a = b.dataset.ga;
+  if(a==="toggle") L[i].actif = L[i].actif===false;
+  if(a==="up" && i>0) [L[i-1],L[i]]=[L[i],L[i-1]];
+  if(a==="down" && i<L.length-1) [L[i+1],L[i]]=[L[i],L[i+1]];
+  if(a==="del"){ const [x] = L.splice(i,1); if(x && x.path && x.sha) A_SUPPRIMER.push({path:x.path, sha:x.sha}); }
+  drawImgs(); pushPreview();
+});
+$('imgUrl').onclick = () => {
+  const u = (prompt("Lien direct de l'image (https://…)") || "").trim();
+  if(!/^https:\/\/\S+$/i.test(u)){ if(u) toast("Le lien doit commencer par https://"); return; }
+  S.images = S.images||[]; S.images.push({url:u, legende:"", ajust:"contenir", actif:true}); drawImgs(); pushPreview();
+};
+async function reduire(file){
+  if(file.type === "image/gif" && file.size < 3e6) return file;
+  const bmp = await createImageBitmap(file);
+  const k = Math.min(1, 1920 / Math.max(bmp.width, bmp.height));
+  const c = document.createElement('canvas'); c.width = Math.round(bmp.width*k); c.height = Math.round(bmp.height*k);
+  c.getContext('2d').drawImage(bmp, 0, 0, c.width, c.height);
+  let blob = await new Promise(r => c.toBlob(r, "image/webp", .85));
+  if(!blob || blob.type !== "image/webp") blob = await new Promise(r => c.toBlob(r, "image/jpeg", .85));
+  return blob;
+}
+function blobB64(blob){ return new Promise((ok,ko)=>{ const r = new FileReader(); r.onload = () => ok(String(r.result).split(",")[1]); r.onerror = ko; r.readAsDataURL(blob); }); }
+$('imgFile').onchange = async e => {
+  const files = [...e.target.files]; e.target.value = "";
+  if(!files.length) return;
+  if(LOCAL){ toast("Repo non détecté, envoi impossible ici"); return; }
+  const lab = $('imgFile').parentElement; lab.classList.add('busy');
+  for(const f of files){
+    try{
+      toast("Envoi de " + f.name + "…");
+      const blob = await reduire(f);
+      const ext = blob.type === "image/gif" ? "gif" : blob.type === "image/webp" ? "webp" : "jpg";
+      const nom = (f.name.replace(/\.[^.]+$/,"").toLowerCase().normalize("NFD").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"").slice(0,40)) || "image";
+      const path = `images/${Date.now()}-${nom}.${ext}`;
+      const r = await fetch(`https://api.github.com/repos/${REPO}/contents/${path}`, {method:"PUT", headers:H(),
+        body:JSON.stringify({message:"Ajout d'une image pour l'écran CRC", branch:CFG.BRANCH||"main", content:await blobB64(blob)})});
+      if(!r.ok){ const j = await r.json().catch(()=>({})); throw new Error(j.message || ("GitHub répond "+r.status)); }
+      const j = await r.json();
+      S.images = S.images||[];
+      S.images.push({url:`https://raw.githubusercontent.com/${REPO}/${CFG.BRANCH||"main"}/${path}`, path, sha:j.content.sha, legende:"", ajust:"contenir", actif:true});
+      drawImgs(); pushPreview();
+    }catch(err){ toast("Échec de l'envoi : " + err.message); }
+  }
+  lab.classList.remove('busy');
+  toast("Image ajoutée, pense à Enregistrer");
+};
+async function purgerImages(){
+  const reste = [];
+  for(const x of A_SUPPRIMER){
+    try{ const r = await fetch(`https://api.github.com/repos/${REPO}/contents/${x.path}`, {method:"DELETE", headers:H(),
+      body:JSON.stringify({message:"Suppression d'une image de l'écran CRC", branch:CFG.BRANCH||"main", sha:x.sha})});
+      if(!r.ok && r.status!==404) reste.push(x); }catch(e){ reste.push(x); }
+  }
+  A_SUPPRIMER = reste;
+}
+
 /* ---------- Recherche de ville ---------- */
 let tmr;
 $('ville').oninput = e => {
@@ -475,6 +576,7 @@ function collect(apercu){
   S.taille = +$('taille').value || 100;
   S.cadre = $('cadre').checked;
   S.horloge = $('horloge').checked;
+  S.entete = $('entete').checked;
   delete S.affichage;
   S.ouverture = $('ouverture').value || "08:30";
   S.fermeture = $('fermeture').value || "18:30";
@@ -510,6 +612,7 @@ $('save').onclick = async () => {
     if(r.status===409 || r.status===422){ await readData(); r = await send(); }
     if(!r.ok){ const j=await r.json().catch(()=>({})); throw new Error(j.message || ("GitHub répond "+r.status)); }
     SHA = (await r.json()).content.sha;
+    if(A_SUPPRIMER.length) await purgerImages();
     toast("Enregistré, l'écran se recharge dans moins d'une minute"); drawMsgs();
   }catch(e){ toast(e.message); }
   $('save').disabled = false;

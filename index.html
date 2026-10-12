@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Écran CRC</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Doto:wght@600;900&family=DotGothic16&family=Montserrat:wght@500;600;700;800&family=VT323&family=Oswald:wght@500;600&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Doto:wght@600;900&family=DotGothic16&family=Montserrat:wght@500;600;700;800&family=VT323&family=Oswald:wght@500;600&family=Rajdhani:wght@600;700&family=Inter:wght@500;700&family=Caveat:wght@600;700&family=Playfair+Display:wght@700;800&family=Josefin+Sans:wght@600;700&family=Orbitron:wght@600;800&display=swap" rel="stylesheet">
 <style>
   /* ================= Styles ================= */
   :root{ --k:1; --u:calc(var(--k) * 1cqmin) }
@@ -32,6 +32,29 @@
     --font:'Rajdhani',system-ui,sans-serif; --weight:700; --case:uppercase; --track:.06em;
     --glow:0 0 .08em #fff, 0 0 .3em currentColor, 0 0 .9em currentColor;
     --overlay:none; --badge-fill:0; }
+
+  body.th-clair{ --bg:#f4f5f7; --panel:#ffffff; --sep:#e1e4ea; --ink:#16181d; --dim:#6b7280;
+    --ambre:#c26a00; --vert:#13804b; --rouge:#d1293d; --blanc:#16181d; --bleu:#2357d6; --off:#e3e6ec;
+    --font:'Inter',system-ui,sans-serif; --weight:700; --case:none; --track:-.01em;
+    --glow:none; --overlay:none; }
+  body.th-craie{ --bg:#22352b; --panel:#2a4034; --sep:#3d5a49; --ink:#f3f1e7; --dim:#a9bcae;
+    --ambre:#ffd98a; --vert:#b8f0a8; --rouge:#ff9e9e; --blanc:#f3f1e7; --bleu:#9fd3ff; --off:#3b5446;
+    --font:'Caveat',cursive; --weight:700; --case:none; --track:.01em;
+    --glow:0 0 .04em rgba(255,255,255,.35);
+    --overlay:radial-gradient(rgba(255,255,255,.05) 1px,transparent 1.5px); --overlay-size:5px 5px; }
+  body.th-journal{ --bg:#f3ecdc; --panel:#fbf7ee; --sep:#1a1714; --ink:#1a1714; --dim:#6e6455;
+    --ambre:#a3361f; --vert:#2f5d3a; --rouge:#a3161f; --blanc:#1a1714; --bleu:#1f3f6e; --off:#ddd3bf;
+    --font:'Playfair Display',Georgia,serif; --weight:800; --case:none; --track:0;
+    --glow:none; --overlay:none; }
+  body.th-med{ --bg:#0e4a6e; --panel:#0b3b58; --sep:#1d6a94; --ink:#fdf6e7; --dim:#a8d3e8;
+    --ambre:#ffc66b; --vert:#7fe0c4; --rouge:#ff8a7a; --blanc:#fdf6e7; --bleu:#9fe3ff; --off:#155d82;
+    --font:'Josefin Sans',system-ui,sans-serif; --weight:700; --case:uppercase; --track:.05em;
+    --glow:none; --overlay:none; }
+  body.th-retro{ --bg:#14052b; --panel:#1d0a3d; --sep:#5b1f8f; --ink:#ffe9fb; --dim:#b18ad6;
+    --ambre:#ffb347; --vert:#2de2e6; --rouge:#ff3864; --blanc:#ffe9fb; --bleu:#9b7bff; --off:#3a1863;
+    --font:'Orbitron',system-ui,sans-serif; --weight:800; --case:uppercase; --track:.06em;
+    --glow:0 0 .15em currentColor;
+    --overlay:linear-gradient(to top,rgba(255,56,100,.16),transparent 40%),repeating-linear-gradient(to right,rgba(255,56,100,.08) 0 1px,transparent 1px 40px); --overlay-size:auto; }
 
   *{box-sizing:border-box;margin:0;padding:0}
   html,body{height:100%;overflow:hidden}
@@ -63,8 +86,17 @@
   .row{flex:1;min-height:0;overflow:hidden}
   .badge{display:inline-block;text-align:center;border:calc(var(--u)*.3) solid currentColor;border-radius:calc(var(--u)*.6);white-space:nowrap;line-height:1.1}
   .badge span{color:inherit}
-  body:is(.th-dash,.th-gare) .badge{background:currentColor;border-color:currentColor}
-  body:is(.th-dash,.th-gare) .badge span{color:#111}
+  body:is(.th-dash,.th-gare,.th-med) .badge{background:currentColor;border-color:currentColor}
+  body:is(.th-dash,.th-gare,.th-med) .badge span{color:#111}
+  body.th-med .badge span{color:#0b3b58}
+  body.th-clair .badge{background:color-mix(in srgb,currentColor 12%,transparent);border-width:0}
+  body.th-journal .badge{background:var(--ink);border-color:var(--ink)}
+  body.th-journal .badge span{color:var(--bg);font-family:'Inter',sans-serif;font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:.8em}
+  body.th-journal.lay-liste .row{border-width:0 0 2px!important;border-color:var(--ink)!important}
+  body.th-craie .badge{border-style:solid;border-radius:40% 8% 40% 8% / 12% 40% 12% 40%}
+  body.th-craie.lay-liste .row{border-style:dashed!important}
+  body.th-clair .row,body.th-clair .head{box-shadow:0 1px 3px rgba(16,24,40,.06)}
+  body.th-retro .big .h{background:linear-gradient(180deg,#ffe36e,#ff3864);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:none}
   body.th-dash .badge{background:color-mix(in srgb,currentColor 20%,transparent)}
   body.th-dash .badge span{color:inherit}
   .main{min-width:0;position:relative;line-height:1.2}
@@ -79,7 +111,7 @@
   .bar i.on{background:var(--vert);box-shadow:0 0 calc(var(--u)*.8) color-mix(in srgb,var(--vert) 70%,transparent)}
   .bar-ambre i.on{background:var(--ambre);box-shadow:0 0 calc(var(--u)*.8) color-mix(in srgb,var(--ambre) 70%,transparent)}
   .bar-rouge i.on{background:var(--rouge)}.bar-bleu i.on{background:var(--bleu)}
-  body:is(.th-dash,.th-gare) .bar i.on{box-shadow:none}
+  body:is(.th-dash,.th-gare,.th-clair,.th-journal,.th-med,.th-craie) .bar i.on{box-shadow:none}
   .days{display:flex;gap:calc(var(--u)*.6)}
   .days b{display:grid;place-items:center;border:calc(var(--u)*.2) solid var(--off);color:var(--dim);border-radius:calc(var(--u)*.4);font-weight:inherit}
   .days b.done{border-color:var(--vert);color:var(--vert)}
@@ -107,7 +139,7 @@
   .lay-liste .row{display:grid;grid-template-columns:calc(var(--u)*23) 1fr auto;align-items:center;gap:calc(var(--u)*2.6);background:var(--panel);border:1px solid var(--sep);padding:0 calc(var(--u)*2.6)}
   .lay-liste .badge{font-size:calc(var(--u)*2.4);padding:calc(var(--u)*1.1) calc(var(--u)*.6)}
   .lay-liste .main{font-size:calc(var(--u)*5.2);white-space:nowrap;overflow:hidden}
-  .lay-liste .side{font-size:calc(var(--u)*3.4);white-space:nowrap;text-align:right}
+  .lay-liste .side{font-size:calc(var(--u)*3.4);white-space:nowrap;text-align:right;max-width:42cqw;overflow:hidden;text-overflow:ellipsis}
   .lay-liste .bar{margin-top:calc(var(--u)*1)}
   .lay-liste .bar i{height:calc(var(--u)*2.2)}
   .lay-liste .days b{width:calc(var(--u)*4.2);height:calc(var(--u)*4.2);font-size:calc(var(--u)*2.2)}
@@ -159,6 +191,20 @@
   body.cadre:not(.th-dash) .screen{background:var(--bg);border-radius:4px}
   body.cadre.lay-liste:not(.th-dash) .screen{padding:calc(var(--u)*.7)}
   body.sans-horloge .clock, body.sans-horloge .big .h{display:none!important}
+  body.sans-entete .head .t, body.sans-entete .menu{display:none}
+  body.sans-entete .head{justify-content:flex-end}
+  body.sans-entete:is(.lay-carrousel,.cadre) .head, body.sans-entete.sans-horloge .head{display:none}
+  body.sans-entete.lay-carrousel .board{padding-top:calc(var(--u)*3.2)}
+
+  /* Images */
+  .row.imgrow{display:flex!important;flex-direction:column;padding:0!important;gap:0!important;background:#000!important;position:relative}
+  .imgrow img{flex:1;min-height:0;width:100%;height:100%;display:block}
+  .imgrow img.contenir{object-fit:contain}.imgrow img.remplir{object-fit:cover}
+  .imgrow .cap{position:absolute;left:0;right:0;bottom:0;padding:calc(var(--u)*1.6) calc(var(--u)*2.4);
+    background:linear-gradient(transparent,rgba(0,0,0,.75));color:#fff;font-size:calc(var(--u)*4);text-align:center;text-shadow:0 1px 3px rgba(0,0,0,.6)}
+  .lay-liste .imgrow .cap{font-size:calc(var(--u)*3.4)}
+  body.page-image .big, body.page-image .ticker{display:none}
+  body.page-image.lay-carrousel .screen{border-color:transparent}
   body.sans-horloge.lay-carrousel .big{justify-content:center}
   body.sans-horloge.lay-carrousel .big .d{text-align:center}
 </style>
@@ -310,7 +356,7 @@ function tick(){
 }
 
 /* ---------- Mise en page : style, taille, résolution ---------- */
-const STYLES = ["led","dash","gare","term","neon"];
+const STYLES = ["led","dash","gare","term","neon","clair","craie","journal","med","retro"];
 function layout(){
   const st = $('stage');
   let W = innerWidth, H = innerHeight, sc = 1;
@@ -325,7 +371,7 @@ function layout(){
   LAY = (disp==="carrousel"||disp==="liste") ? disp : ((W<900||H<520) ? "carrousel" : "liste");
   const style = STYLES.includes(S.style) ? S.style : "led";
   const b = document.body;
-  b.className = `th-${style} lay-${LAY}` + (S.cadre!==false ? " cadre" : "") + (S.horloge===false ? " sans-horloge" : "") + (PREVIEW ? " preview" : "");
+  b.className = `th-${style} lay-${LAY}` + (S.cadre!==false ? " cadre" : "") + (S.horloge===false ? " sans-horloge" : "") + (S.entete===false ? " sans-entete" : "") + (PREVIEW ? " preview" : "");
   b.style.setProperty('--k', Math.max(.5, Math.min(2, (+S.taille||100)/100)));
   window.__W = W;
 }
@@ -369,12 +415,18 @@ function render(){
     $('dots').innerHTML = out.length>1 && out.length<=24 ? out.map((_,i)=>`<i class="${i===page?'on':''}"></i>`).join("") : "";
     out = [out[page] || ""];
   }else{
-    const par = Math.max(1, Math.min(12, +S.lignes || 5));
-    const pages = Math.max(1, Math.ceil(out.length/par));
-    page = page % pages; window.__pages = pages;
+    const par = Math.max(1, Math.min(12, +S.lignes || 5)), pages = [];
+    let cur = [];
+    out.forEach(r => {
+      if(r.includes('imgrow')){ if(cur.length) pages.push(cur); pages.push([r]); cur = []; }
+      else { cur.push(r); if(cur.length >= par){ pages.push(cur); cur = []; } }
+    });
+    if(cur.length || !pages.length) pages.push(cur);
+    page = page % pages.length; window.__pages = pages.length;
     $('dots').innerHTML = "";
-    out = out.slice(page*par, page*par+par);
+    out = pages[page];
   }
+  document.body.classList.toggle('page-image', out.length===1 && (out[0]||"").includes('imgrow'));
   $('rows').innerHTML = out.join("");
   requestAnimationFrame(fitTexts);
 }

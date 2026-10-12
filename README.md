@@ -1,6 +1,6 @@
 # Écran CRC
 
-Widget d'affichage (5 styles : panneau LED, tableau de bord, quai de gare, terminal rétro, néon) (horloge, météo, fête du jour, avancement de la semaine du lundi au samedi, messages, fun facts) avec une page d'admin.
+Widget d'affichage (10 styles : panneau LED, tableau de bord, quai de gare, terminal rétro, néon, clair, tableau à craie, journal, Méditerranée, rétro 80s) (horloge, météo, fête du jour, avancement de la semaine du lundi au samedi, messages, fun facts) avec une page d'admin.
 
 - `index.html` : l'écran, à ouvrir en plein écran sur le poste du CRC
 - `admin.html` : la page pour modifier ce qui s'affiche
@@ -29,4 +29,4 @@ Tout se règle dans l'admin : style, disposition (carrousel ou liste), résoluti
 
 ## Modules
 
-Météo, prévisions 3 jours, fête du jour, anniversaires, comptes à rebours, objectif du jour, avancement de la semaine, jours fériés et ponts, vacances scolaires zone C (API data.education.gouv.fr), soleil et lune, citation du jour, éphéméride (Wikipédia), messages. Chacun s'active et se range dans l'admin. Le code est dans `modules.js`.
+Météo, prévisions 3 jours, fête du jour, anniversaires, comptes à rebours, objectif du jour, avancement de la semaine, jours fériés et ponts, vacances scolaires zone C (API data.education.gouv.fr), soleil et lune, citation du jour, éphéméride (Wikipédia), messages, images (envoyées depuis l'admin dans le dossier `images/`). Chacun s'active et se range dans l'admin. Le code est dans `modules.js`.

@@ -17,7 +17,8 @@ window.MODULES = [
   { id:"soleil",    nom:"Soleil et lune" },
   { id:"citation",  nom:"Citation du jour" },
   { id:"histoire",  nom:"Ce jour-là dans l'histoire" },
-  { id:"messages",  nom:"Messages" }
+  { id:"messages",  nom:"Messages" },
+  { id:"images",    nom:"Images" }
 ];
 
 const DAY = 864e5;
@@ -262,6 +263,14 @@ function lignesModule(id, d){
         const h = HIST[d.getHours() % HIST.length];
         out.push(row("En "+h.an,"bleu", esc(h.txt)));
       }
+      break;
+
+    case "images":
+      if(B.images !== false)
+        (S.images||[]).filter(im => im.actif !== false && im.url).forEach(im => {
+          const src = String(im.url).replace(/"/g,"%22");
+          out.push(`<div class="row imgrow fade"><img class="${im.ajust==="remplir"?"remplir":"contenir"}" src="${src}" alt="${esc(im.legende||"")}" onerror="this.closest('.row').style.visibility='hidden'">${im.legende?`<div class="cap">${esc(im.legende)}</div>`:""}</div>`);
+        });
       break;
 
     case "messages":
