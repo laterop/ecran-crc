@@ -9,7 +9,7 @@
   "resolution": "auto",
   "res_w": 435,
   "res_h": 430,
-  "reload": 1791547397797,
+  "reload": 1791814866603,
   "ville": "Montpellier",
   "lat": 43.6108,
   "lon": 3.8767,
@@ -60,6 +60,12 @@
       "date": "2026-12-25",
       "afficher": 60,
       "couleur": "rouge"
+    },
+    {
+      "titre": "Halloween",
+      "date": "2026-10-31",
+      "afficher": 30,
+      "couleur": "rouge"
     }
   ],
   "objectif": {
@@ -98,5 +104,5 @@
   "funfacts_perso": [],
   "vitesse": 40,
   "rotation": 10,
-  "updated_at": "2026-10-09T12:03:17.797Z"
+  "updated_at": "2026-10-12T14:21:06.603Z"
 }
