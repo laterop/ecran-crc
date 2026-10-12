@@ -1,16 +1,16 @@
 {
   "titre": "CRC MONTPELLIER",
   "sous_titre": "Aujourd'hui",
-  "style": "med",
+  "style": "gare",
   "disposition": "carrousel",
   "cadre": false,
   "horloge": true,
-  "entete": true,
-  "taille": 160,
+  "entete": false,
+  "taille": 145,
   "resolution": "auto",
   "res_w": 435,
   "res_h": 430,
-  "reload": 1791817544194,
+  "reload": 1791820558202,
   "ville": "Montpellier",
   "lat": 43.6108,
   "lon": 3.8767,
@@ -32,7 +32,7 @@
     "messages": true,
     "images": false,
     "gif": true,
-    "funfacts": false
+    "funfacts": true
   },
   "ordre": [
     "meteo",
@@ -53,7 +53,7 @@
   ],
   "images": [],
   "gif_source": "giphy",
-  "gif_titre": "GIF du jour",
+  "gif_titre": "un GIF random",
   "giphy_cle": "MlDAk4EUP5vo423jtfpNHQMCRoY0H3Yk",
   "gif_themes": [
     "sleep",
@@ -123,5 +123,5 @@
   "funfacts_perso": [],
   "vitesse": 50,
   "rotation": 5,
-  "updated_at": "2026-10-12T15:05:44.194Z"
+  "updated_at": "2026-10-12T15:55:58.202Z"
 }
