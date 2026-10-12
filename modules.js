@@ -106,33 +106,46 @@ async function loadHistoire(){
   }catch(e){ HIST = null; }
 }
 
-/* ---------- GIF du jour ---------- */
+/* ---------- GIF : un différent à chaque passage ---------- */
 const GIF_THEMES = ["weekend","monday","coffee","wednesday","almost friday","friday","weekend"];
-let GIF = null, GIF_CLE = "";
+let GIF_POOL = [], GIF_CLE = "", GIF_TOUR = Math.floor(Math.random()*1000), GIF_ORDRE = [], GIF_ORDRE_CLE = "";
 function jourAn(d){ return Math.floor((minuit(d) - new Date(d.getFullYear(),0,0)) / DAY); }
+function melanger(n){ const a = [...Array(n).keys()]; for(let i=n-1;i>0;i--){ const j = Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
 async function loadGif(){
   const d = new Date(), src = S.gif_source || "liste";
-  if(src !== "giphy" || !S.giphy_cle){ GIF = null; GIF_CLE = ""; return; }
+  if(src !== "giphy" || !S.giphy_cle){ GIF_POOL = []; GIF_CLE = ""; return; }
   const mots = (S.gif_themes && S.gif_themes.length===7) ? S.gif_themes : GIF_THEMES;
   const q = (mots[d.getDay()] || "fun").trim() || "fun";
-  const cle = d.toDateString() + "|" + q + "|" + S.giphy_cle;
-  if(GIF_CLE === cle && GIF) return;
+  // nouveau lot chaque heure, ou quand le thème change
+  const cle = d.toDateString() + d.getHours() + "|" + q + "|" + S.giphy_cle;
+  if(GIF_CLE === cle && GIF_POOL.length) return;
   try{
-    const u = `https://api.giphy.com/v1/gifs/search?api_key=${encodeURIComponent(S.giphy_cle)}&q=${encodeURIComponent(q)}&limit=30&rating=g&lang=fr`;
-    const j = await (await fetch(u)).json();
-    const list = (j.data||[]).filter(g => g.images && (g.images.downsized_medium || g.images.original));
-    if(!list.length){ GIF = null; return; }
-    const g = list[jourAn(d) % list.length], im = g.images.downsized_medium || g.images.original;
-    GIF = { url: im.url, titre: "", giphy: true };
+    const off = Math.floor(Math.random()*150);
+    const u = `https://api.giphy.com/v1/gifs/search?api_key=${encodeURIComponent(S.giphy_cle)}&q=${encodeURIComponent(q)}&limit=50&offset=${off}&rating=g&lang=fr`;
+    let j = await (await fetch(u)).json();
+    if(!(j.data||[]).length && off){ j = await (await fetch(u.replace(/&offset=\d+/,"&offset=0"))).json(); }
+    const list = (j.data||[]).map(g => g.images && (g.images.downsized_medium || g.images.original)).filter(im => im && im.url);
+    if(!list.length) return;
+    GIF_POOL = melanger(list.length).map(i => ({ url:list[i].url, titre:"", giphy:true }));
     GIF_CLE = cle;
-  }catch(e){ GIF = null; }
+  }catch(e){}
 }
-function gifDuJour(d){
-  if((S.gif_source || "liste") === "giphy") return GIF;
+function gifListe(){
   const l = (S.gifs||[]).filter(g => g.url && g.actif !== false);
-  if(!l.length) return null;
-  const g = l[jourAn(d) % l.length];
-  return { url:g.url, titre:g.legende||"" };
+  const cle = l.map(g=>g.url).join("|");
+  if(cle !== GIF_ORDRE_CLE){ GIF_ORDRE = melanger(l.length); GIF_ORDRE_CLE = cle; }
+  return l.map((g,i) => l[GIF_ORDRE[i]]).map(g => ({ url:g.url, titre:g.legende||"" }));
+}
+function gifPool(){ return (S.gif_source || "liste") === "giphy" ? GIF_POOL : gifListe(); }
+function gifDuJour(){
+  const p = gifPool();
+  return p.length ? p[GIF_TOUR % p.length] : null;
+}
+// appelé quand on quitte la page du GIF : le suivant est préchargé pour s'afficher sans blanc
+function gifSuivant(){
+  GIF_TOUR++;
+  const g = gifDuJour();
+  if(g){ const im = new Image(); im.src = g.url; }
 }
 
 /* ---------- Citations ---------- */
@@ -305,7 +318,7 @@ function lignesModule(id, d){
 
     case "gif":
       if(B.gif !== false){
-        const g = gifDuJour(d);
+        const g = gifDuJour();
         if(g){
           const src = String(g.url).replace(/"/g,"%22");
           const cap = [S.gif_titre ?? "GIF du jour", g.titre].filter(Boolean).join(" · ");

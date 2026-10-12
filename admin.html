@@ -199,9 +199,9 @@
         <h3>GIF du jour</h3>
         <div class="grid">
           <div><label for="gifSrc">Source</label><select id="gifSrc">
-            <option value="liste">Ma liste, un GIF différent chaque jour</option>
-            <option value="giphy">Giphy automatique, selon le jour</option></select></div>
-          <div><label for="gifTitre">Légende affichée</label><input id="gifTitre" maxlength="40" placeholder="GIF du jour"></div>
+            <option value="liste">Ma liste</option>
+            <option value="giphy">Giphy automatique, thème selon le jour</option></select></div>
+          <div><label for="gifTitre">Légende affichée</label><input id="gifTitre" maxlength="40" placeholder="GIF"></div>
         </div>
         <div id="gifListe" style="margin-top:12px">
           <div class="lst" id="gifList"></div>
@@ -209,12 +209,12 @@
             <label class="btn-file"><input type="file" id="gifFile" accept="image/gif,image/webp" multiple hidden>+ Envoyer des GIFs</label>
             <button type="button" id="gifUrl">+ Ajouter par lien</button>
           </div>
-          <p class="hint">Pour un lien Giphy, colle directement l'adresse de la page, je la convertis. Pour Tenor ou ailleurs, fais clic droit sur le GIF puis "Copier l'adresse de l'image". Les GIFs tournent dans l'ordre, un par jour.</p>
+          <p class="hint">Pour un lien Giphy, colle directement l'adresse de la page, je la convertis. Pour Tenor ou ailleurs, fais clic droit sur le GIF puis "Copier l'adresse de l'image". À chaque passage, l'écran pioche un GIF différent dans ta liste, dans un ordre mélangé.</p>
         </div>
         <div id="gifGiphy" style="margin-top:12px" hidden>
           <label for="gifCle">Clé API Giphy</label>
           <input id="gifCle" autocomplete="off" placeholder="Colle ta clé ici">
-          <p class="hint">Gratuite sur <a href="https://developers.giphy.com/dashboard/" target="_blank" style="color:var(--ambre)">developers.giphy.com</a> : crée une app de type "API", copie la clé. Elle sera lisible dans le repo public, c'est prévu comme ça chez Giphy mais n'y mets rien d'autre. Seuls les GIFs classés tout public sont pris.</p>
+          <p class="hint">Gratuite sur <a href="https://developers.giphy.com/dashboard/" target="_blank" style="color:var(--ambre)">developers.giphy.com</a> : crée une app de type "API", copie la clé. Elle sera lisible dans le repo public, c'est prévu comme ça chez Giphy mais n'y mets rien d'autre. Seuls les GIFs classés tout public sont pris. À chaque passage un nouveau GIF, avec un nouveau lot de 50 chaque heure.</p>
           <label style="margin-top:10px">Thème de recherche par jour (en anglais, ça marche mieux)</label>
           <div class="grid" id="gifJours"></div>
         </div>

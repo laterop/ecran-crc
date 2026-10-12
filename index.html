@@ -474,7 +474,11 @@ layout(); tick(); setInterval(tick, 1000);
   let rz; addEventListener('resize', ()=>{ clearTimeout(rz); rz = setTimeout(()=>{ layout(); render(); buildTicker(); }, 150); });
   let n = 0;
   setInterval(()=>{ n++;
-    if(window.__pages>1 && n % Math.max(3,+S.rotation||10) === 0){ page++; render(); }
+    if(n % Math.max(3,+S.rotation||10) === 0){
+      const surGif = !!document.querySelector('#rows .gifrow');
+      if(surGif && typeof gifSuivant === 'function') gifSuivant();
+      if(window.__pages>1){ page++; render(); } else if(surGif) render();
+    }
     else if(n % 60 === 0) render();
   }, 1000);
   setInterval(()=>{ const d=new Date(); if(!PREVIEW && d.getHours()===4 && d.getMinutes()===0) location.reload(); }, 60000);
