@@ -10,7 +10,7 @@
   "resolution": "auto",
   "res_w": 435,
   "res_h": 430,
-  "reload": 1791820563355,
+  "reload": 1791900606168,
   "ville": "Montpellier",
   "lat": 43.6108,
   "lon": 3.8767,
@@ -117,11 +117,17 @@
       "badge": "Trafic",
       "texte": "Réseau SNCF: Normal",
       "couleur": "vert",
-      "actif": false
+      "actif": true
+    },
+    {
+      "badge": "Info",
+      "texte": "Salut everybody tout le monde, ça y est, c'est mardi c'est bientôt le weekend",
+      "couleur": "ambre",
+      "actif": true
     }
   ],
   "funfacts_perso": [],
   "vitesse": 50,
   "rotation": 5,
-  "updated_at": "2026-10-12T15:56:03.355Z"
+  "updated_at": "2026-10-13T14:10:06.168Z"
 }
