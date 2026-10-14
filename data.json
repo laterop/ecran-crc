@@ -10,7 +10,7 @@
   "resolution": "auto",
   "res_w": 435,
   "res_h": 430,
-  "reload": 1791980774274,
+  "reload": 1791980900492,
   "ville": "Montpellier",
   "lat": 43.6108,
   "lon": 3.8767,
@@ -93,7 +93,9 @@
     "cible": 80,
     "unite": " %"
   },
-  "citations_perso": [],
+  "citations_perso": [
+    "L'ascenseur est en panne"
+  ],
   "messages": [
     {
       "badge": "Info",
@@ -124,10 +126,16 @@
       "texte": "Salut everybody tout le monde, ça y est, c'est mardi c'est bientôt le weekend",
       "couleur": "ambre",
       "actif": false
+    },
+    {
+      "badge": "/!\\",
+      "texte": "L'ascenseur est en panne (Demandez à Perrine et Mathilde)",
+      "couleur": "rouge",
+      "actif": true
     }
   ],
   "funfacts_perso": [],
-  "vitesse": 50,
-  "rotation": 5,
-  "updated_at": "2026-10-14T12:26:14.274Z"
+  "vitesse": 140,
+  "rotation": 7,
+  "updated_at": "2026-10-14T12:28:20.492Z"
 }
