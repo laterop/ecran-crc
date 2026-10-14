@@ -10,7 +10,7 @@
   "resolution": "auto",
   "res_w": 435,
   "res_h": 430,
-  "reload": 1791980944772,
+  "reload": 1791982869381,
   "ville": "Montpellier",
   "lat": 43.6108,
   "lon": 3.8767,
@@ -22,15 +22,15 @@
     "fete": true,
     "anniv": true,
     "rebours": true,
-    "objectif": false,
+    "objectif": true,
     "semaine": false,
-    "feries": false,
+    "feries": true,
     "vacances": false,
     "soleil": false,
     "citation": false,
     "histoire": false,
     "messages": true,
-    "images": false,
+    "images": true,
     "gif": true,
     "funfacts": true
   },
@@ -58,7 +58,7 @@
       "sha": "2804336423ca22d71d42573498d6adb8e21ae4c7",
       "legende": "",
       "ajust": "contenir",
-      "actif": true
+      "actif": false
     }
   ],
   "gif_source": "giphy",
@@ -98,8 +98,8 @@
   ],
   "objectif": {
     "titre": "Objectif QS",
-    "valeur": 77,
-    "cible": 80,
+    "valeur": 79,
+    "cible": 83,
     "unite": " %"
   },
   "citations_perso": [
@@ -146,5 +146,5 @@
   "funfacts_perso": [],
   "vitesse": 140,
   "rotation": 7,
-  "updated_at": "2026-10-14T12:29:04.772Z"
+  "updated_at": "2026-10-14T13:01:09.381Z"
 }
