@@ -10,7 +10,7 @@
   "resolution": "auto",
   "res_w": 435,
   "res_h": 430,
-  "reload": 1791980900492,
+  "reload": 1791980944772,
   "ville": "Montpellier",
   "lat": 43.6108,
   "lon": 3.8767,
@@ -51,7 +51,16 @@
     "images",
     "gif"
   ],
-  "images": [],
+  "images": [
+    {
+      "url": "https://raw.githubusercontent.com/laterop/ecran-crc/main/images/1791980924441-logo-zou-paca-sncf-voyageurs.webp",
+      "path": "images/1791980924441-logo-zou-paca-sncf-voyageurs.webp",
+      "sha": "2804336423ca22d71d42573498d6adb8e21ae4c7",
+      "legende": "",
+      "ajust": "contenir",
+      "actif": true
+    }
+  ],
   "gif_source": "giphy",
   "gif_titre": "un GIF random",
   "giphy_cle": "MlDAk4EUP5vo423jtfpNHQMCRoY0H3Yk",
@@ -137,5 +146,5 @@
   "funfacts_perso": [],
   "vitesse": 140,
   "rotation": 7,
-  "updated_at": "2026-10-14T12:28:20.492Z"
+  "updated_at": "2026-10-14T12:29:04.772Z"
 }
