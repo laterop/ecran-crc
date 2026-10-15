@@ -10,7 +10,7 @@
   "resolution": "auto",
   "res_w": 435,
   "res_h": 430,
-  "reload": 1792070592330,
+  "reload": 1792071222765,
   "ville": "Montpellier",
   "lat": 43.6108,
   "lon": 3.8767,
@@ -22,7 +22,7 @@
     "fete": true,
     "anniv": true,
     "rebours": true,
-    "objectif": true,
+    "objectif": false,
     "semaine": false,
     "feries": true,
     "vacances": false,
@@ -83,9 +83,41 @@
     {
       "prenom": "Bilal",
       "date": "11-11"
+    },
+    {
+      "prenom": "Stashna",
+      "date": "12-21"
+    },
+    {
+      "prenom": "Jeanne",
+      "date": "04-12"
+    },
+    {
+      "prenom": "Hugo",
+      "date": "05-21"
+    },
+    {
+      "prenom": "Nathalie",
+      "date": "03-21"
+    },
+    {
+      "prenom": "Lisa",
+      "date": "05-16"
+    },
+    {
+      "prenom": "Seydou",
+      "date": "12-20"
+    },
+    {
+      "prenom": "Luca",
+      "date": "11-16"
+    },
+    {
+      "prenom": "Selenna",
+      "date": "03-06"
     }
   ],
-  "anniv_avance": 20,
+  "anniv_avance": 30,
   "rebours": [
     {
       "titre": "Noël",
@@ -150,5 +182,5 @@
   "funfacts_perso": [],
   "vitesse": 140,
   "rotation": 7,
-  "updated_at": "2026-10-15T13:23:12.330Z"
+  "updated_at": "2026-10-15T13:33:42.765Z"
 }
