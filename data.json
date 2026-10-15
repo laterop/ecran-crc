@@ -10,7 +10,7 @@
   "resolution": "auto",
   "res_w": 435,
   "res_h": 430,
-  "reload": 1792071222765,
+  "reload": 1792073452535,
   "ville": "Montpellier",
   "lat": 43.6108,
   "lon": 3.8767,
@@ -115,6 +115,10 @@
     {
       "prenom": "Selenna",
       "date": "03-06"
+    },
+    {
+      "prenom": "Filipa",
+      "date": "01-05"
     }
   ],
   "anniv_avance": 30,
@@ -182,5 +186,5 @@
   "funfacts_perso": [],
   "vitesse": 140,
   "rotation": 7,
-  "updated_at": "2026-10-15T13:33:42.765Z"
+  "updated_at": "2026-10-15T14:10:52.535Z"
 }
