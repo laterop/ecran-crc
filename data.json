@@ -10,7 +10,7 @@
   "resolution": "auto",
   "res_w": 435,
   "res_h": 430,
-  "reload": 1792073452535,
+  "reload": 1792231309181,
   "ville": "Montpellier",
   "lat": 43.6108,
   "lon": 3.8767,
@@ -71,7 +71,7 @@
     "halloween",
     "almost friday",
     "friday",
-    "weekend"
+    "REVOLUTION"
   ],
   "gifs": [],
   "lignes": 5,
@@ -186,5 +186,5 @@
   "funfacts_perso": [],
   "vitesse": 140,
   "rotation": 7,
-  "updated_at": "2026-10-15T14:10:52.535Z"
+  "updated_at": "2026-10-17T10:01:49.180Z"
 }
