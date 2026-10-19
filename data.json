@@ -10,7 +10,7 @@
   "resolution": "auto",
   "res_w": 435,
   "res_h": 430,
-  "reload": 1792386827339,
+  "reload": 1792387195211,
   "ville": "Montpellier",
   "lat": 43.6108,
   "lon": 3.8767,
@@ -183,8 +183,29 @@
       "actif": true
     }
   ],
-  "funfacts_perso": [],
+  "funfacts_perso": [
+    "Les crocodiles sont plus proches des oiseaux que des lézards d’un point de vue évolutif.",
+    "Certaines tortues peuvent vivre plus de 150 ans.",
+    "Le caméléon peut bouger ses deux yeux indépendamment l’un de l’autre.",
+    "Les serpents « sentent » leur environnement avec leur langue.",
+    "Le dragon de Komodo peut détecter une proie à plusieurs kilomètres grâce à son odorat.",
+    "Certaines espèces de geckos peuvent marcher au plafond grâce à des millions de poils microscopiques sous leurs pattes.",
+    "Les tortues marines reviennent souvent pondre sur la plage où elles sont nées.",
+    "Certains lézards peuvent détacher leur queue pour échapper à un prédateur.",
+    "Les crocodiles avalent parfois des pierres pour les aider à plonger et à digérer.",
+    "Le plus grand reptile vivant est le crocodile marin, qui peut dépasser 6 mètres de long.",
+    "Les serpents clignent rarement des yeux car ils n’ont pas de paupières mobiles.",
+    "Certains geckos communiquent en produisant des sons, contrairement à la plupart des reptiles.",
+    "Les anacondas comptent parmi les serpents les plus lourds du monde.",
+    "La température du nid détermine souvent le sexe des bébés chez plusieurs espèces de reptiles.",
+    "Les caméléons changent de couleur principalement pour communiquer et réguler leur température, pas seulement pour se camoufler.",
+    "Certaines tortues peuvent rester plusieurs mois sans manger.",
+    "Le basilic est surnommé « lézard Jésus-Christ » car il peut courir sur l’eau sur de courtes distances.",
+    "Les serpents peuvent ouvrir leur mâchoire extrêmement largement pour avaler des proies plus grosses que leur tête.",
+    "Le tuatara de Nouvelle-Zélande possède un « troisième œil » sensible à la lumière sur le sommet de sa tête.",
+    "Les crocodiles produisent de véritables larmes lorsqu’ils mangent, à l’origine de l’expression « pleurer des larmes de crocodile »."
+  ],
   "vitesse": 140,
   "rotation": 7,
-  "updated_at": "2026-10-19T05:13:47.339Z"
+  "updated_at": "2026-10-19T05:19:55.211Z"
 }
