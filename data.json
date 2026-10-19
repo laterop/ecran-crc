@@ -10,7 +10,7 @@
   "resolution": "auto",
   "res_w": 435,
   "res_h": 430,
-  "reload": 1792231309181,
+  "reload": 1792386824471,
   "ville": "Montpellier",
   "lat": 43.6108,
   "lon": 3.8767,
@@ -66,7 +66,7 @@
   "giphy_cle": "MlDAk4EUP5vo423jtfpNHQMCRoY0H3Yk",
   "gif_themes": [
     "sleep",
-    "sunny day",
+    "Crepes",
     "Winx",
     "halloween",
     "almost friday",
@@ -186,5 +186,5 @@
   "funfacts_perso": [],
   "vitesse": 140,
   "rotation": 7,
-  "updated_at": "2026-10-17T10:01:49.180Z"
+  "updated_at": "2026-10-19T05:13:44.471Z"
 }
