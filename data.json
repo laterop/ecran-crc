@@ -10,7 +10,7 @@
   "resolution": "auto",
   "res_w": 435,
   "res_h": 430,
-  "reload": 1792387206335,
+  "reload": 1792387220112,
   "ville": "Montpellier",
   "lat": 43.6108,
   "lon": 3.8767,
@@ -205,7 +205,7 @@
     "Le tuatara de Nouvelle-Zélande possède un « troisième œil » sensible à la lumière sur le sommet de sa tête.",
     "Les crocodiles produisent de véritables larmes lorsqu’ils mangent, à l’origine de l’expression « pleurer des larmes de crocodile »."
   ],
-  "vitesse": 140,
+  "vitesse": 100,
   "rotation": 7,
-  "updated_at": "2026-10-19T05:20:06.335Z"
+  "updated_at": "2026-10-19T05:20:20.112Z"
 }
