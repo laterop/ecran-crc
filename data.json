@@ -10,7 +10,7 @@
   "resolution": "auto",
   "res_w": 435,
   "res_h": 430,
-  "reload": 1792387220112,
+  "reload": 1793109088093,
   "ville": "Montpellier",
   "lat": 43.6108,
   "lon": 3.8767,
@@ -66,11 +66,11 @@
   "giphy_cle": "MlDAk4EUP5vo423jtfpNHQMCRoY0H3Yk",
   "gif_themes": [
     "sleep",
-    "Crepes",
-    "Winx",
     "halloween",
-    "almost friday",
-    "friday",
+    "halloween",
+    "halloween",
+    "halloween",
+    "halloween",
     "REVOLUTION"
   ],
   "gifs": [],
@@ -207,5 +207,5 @@
   ],
   "vitesse": 100,
   "rotation": 7,
-  "updated_at": "2026-10-19T05:20:20.112Z"
+  "updated_at": "2026-10-27T13:51:28.093Z"
 }
