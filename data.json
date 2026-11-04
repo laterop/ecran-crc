@@ -10,7 +10,7 @@
   "resolution": "auto",
   "res_w": 435,
   "res_h": 430,
-  "reload": 1793796271176,
+  "reload": 1793796574698,
   "ville": "Montpellier",
   "lat": 43.6108,
   "lon": 3.8767,
@@ -66,9 +66,9 @@
   "giphy_cle": "MlDAk4EUP5vo423jtfpNHQMCRoY0H3Yk",
   "gif_themes": [
     "off",
-    "Perrine",
-    "Luca",
-    "cheminée",
+    "cinamon roll",
+    "Soupe",
+    "Thermomix",
     "Pain d'épice",
     "foret",
     "fall mushroom"
@@ -119,6 +119,10 @@
     {
       "prenom": "Filipa",
       "date": "01-05"
+    },
+    {
+      "prenom": "Noélie",
+      "date": "12-06"
     }
   ],
   "anniv_avance": 30,
@@ -217,5 +221,5 @@
   ],
   "vitesse": 100,
   "rotation": 7,
-  "updated_at": "2026-11-04T12:44:31.176Z"
+  "updated_at": "2026-11-04T12:49:34.698Z"
 }
