@@ -10,7 +10,7 @@
   "resolution": "auto",
   "res_w": 435,
   "res_h": 430,
-  "reload": 1793795910519,
+  "reload": 1793795994124,
   "ville": "Montpellier",
   "lat": 43.6108,
   "lon": 3.8767,
@@ -113,7 +113,7 @@
       "date": "11-16"
     },
     {
-      "prenom": "Selenna",
+      "prenom": "Selena",
       "date": "03-06"
     },
     {
@@ -134,6 +134,12 @@
       "date": "2026-10-31",
       "afficher": 30,
       "couleur": "rouge"
+    },
+    {
+      "titre": "BLACK FRIDAY",
+      "date": "2026-11-27",
+      "afficher": 30,
+      "couleur": "ambre"
     }
   ],
   "objectif": {
@@ -211,5 +217,5 @@
   ],
   "vitesse": 100,
   "rotation": 7,
-  "updated_at": "2026-11-04T12:38:30.519Z"
+  "updated_at": "2026-11-04T12:39:54.124Z"
 }
