@@ -10,7 +10,7 @@
   "resolution": "auto",
   "res_w": 435,
   "res_h": 430,
-  "reload": 1793795444812,
+  "reload": 1793795654725,
   "ville": "Montpellier",
   "lat": 43.6108,
   "lon": 3.8767,
@@ -68,8 +68,8 @@
     "weekend",
     "Perrine",
     "Luca",
-    "Ben",
-    "Bilal",
+    "fire chemney",
+    "gingerbread",
     "Nathalie",
     "REVOLUTION"
   ],
@@ -205,5 +205,5 @@
   ],
   "vitesse": 100,
   "rotation": 7,
-  "updated_at": "2026-11-04T12:30:44.812Z"
+  "updated_at": "2026-11-04T12:34:14.725Z"
 }
