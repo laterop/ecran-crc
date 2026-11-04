@@ -10,7 +10,7 @@
   "resolution": "auto",
   "res_w": 435,
   "res_h": 430,
-  "reload": 1793796574698,
+  "reload": 1793796663525,
   "ville": "Montpellier",
   "lat": 43.6108,
   "lon": 3.8767,
@@ -68,7 +68,7 @@
     "off",
     "cinamon roll",
     "Soupe",
-    "Thermomix",
+    "cheminée",
     "Pain d'épice",
     "foret",
     "fall mushroom"
@@ -221,5 +221,5 @@
   ],
   "vitesse": 100,
   "rotation": 7,
-  "updated_at": "2026-11-04T12:49:34.698Z"
+  "updated_at": "2026-11-04T12:51:03.525Z"
 }
