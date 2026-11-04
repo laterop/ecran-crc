@@ -10,7 +10,7 @@
   "resolution": "auto",
   "res_w": 435,
   "res_h": 430,
-  "reload": 1793796673685,
+  "reload": 1793796685294,
   "ville": "Montpellier",
   "lat": 43.6108,
   "lon": 3.8767,
@@ -19,20 +19,20 @@
   "blocs": {
     "meteo": true,
     "previsions": false,
-    "fete": true,
-    "anniv": true,
-    "rebours": true,
+    "fete": false,
+    "anniv": false,
+    "rebours": false,
     "objectif": false,
     "semaine": false,
-    "feries": true,
+    "feries": false,
     "vacances": false,
     "soleil": false,
     "citation": false,
     "histoire": false,
-    "messages": true,
-    "images": true,
+    "messages": false,
+    "images": false,
     "gif": true,
-    "funfacts": true
+    "funfacts": false
   },
   "ordre": [
     "meteo",
@@ -221,5 +221,5 @@
   ],
   "vitesse": 100,
   "rotation": 7,
-  "updated_at": "2026-11-04T12:51:13.685Z"
+  "updated_at": "2026-11-04T12:51:25.294Z"
 }
