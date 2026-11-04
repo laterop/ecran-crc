@@ -10,7 +10,7 @@
   "resolution": "auto",
   "res_w": 435,
   "res_h": 430,
-  "reload": 1793795994124,
+  "reload": 1793796271176,
   "ville": "Montpellier",
   "lat": 43.6108,
   "lon": 3.8767,
@@ -65,13 +65,13 @@
   "gif_titre": "un GIF random",
   "giphy_cle": "MlDAk4EUP5vo423jtfpNHQMCRoY0H3Yk",
   "gif_themes": [
-    "weekend",
+    "off",
     "Perrine",
     "Luca",
     "cheminée",
     "Pain d'épice",
-    "au",
-    "REVOLUTION"
+    "foret",
+    "fall mushroom"
   ],
   "gifs": [],
   "lignes": 5,
@@ -182,7 +182,7 @@
     },
     {
       "badge": "/!\\",
-      "texte": "L'ascenseur est en panne (Demandez à Perrine et Mathilde)",
+      "texte": "Nous n'avons toujours pas d'ascenseur... Encore ",
       "couleur": "rouge",
       "actif": true
     },
@@ -217,5 +217,5 @@
   ],
   "vitesse": 100,
   "rotation": 7,
-  "updated_at": "2026-11-04T12:39:54.124Z"
+  "updated_at": "2026-11-04T12:44:31.176Z"
 }
