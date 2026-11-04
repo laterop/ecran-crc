@@ -10,7 +10,7 @@
   "resolution": "auto",
   "res_w": 435,
   "res_h": 430,
-  "reload": 1793795737389,
+  "reload": 1793795910519,
   "ville": "Montpellier",
   "lat": 43.6108,
   "lon": 3.8767,
@@ -69,8 +69,8 @@
     "Perrine",
     "Luca",
     "cheminée",
-    "gingerbread",
-    "Nathalie",
+    "Pain d'épice",
+    "au",
     "REVOLUTION"
   ],
   "gifs": [],
@@ -179,6 +179,12 @@
       "texte": "L'ascenseur est en panne (Demandez à Perrine et Mathilde)",
       "couleur": "rouge",
       "actif": true
+    },
+    {
+      "badge": "Info",
+      "texte": "Le cèpe ce n'est pas un arbre c'est un champignon",
+      "couleur": "ambre",
+      "actif": true
     }
   ],
   "funfacts_perso": [
@@ -205,5 +211,5 @@
   ],
   "vitesse": 100,
   "rotation": 7,
-  "updated_at": "2026-11-04T12:35:37.389Z"
+  "updated_at": "2026-11-04T12:38:30.519Z"
 }
