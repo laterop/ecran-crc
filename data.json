@@ -10,7 +10,7 @@
   "resolution": "auto",
   "res_w": 435,
   "res_h": 430,
-  "reload": 1793964252772,
+  "reload": 1793968398561,
   "ville": "Montpellier",
   "lat": 43.6108,
   "lon": 3.8767,
@@ -23,7 +23,7 @@
     "anniv": true,
     "rebours": true,
     "objectif": false,
-    "semaine": true,
+    "semaine": false,
     "feries": true,
     "vacances": false,
     "soleil": false,
@@ -70,7 +70,7 @@
     "Soupe",
     "cheminée",
     "Pain d'épice",
-    "foret",
+    "forest fall",
     "fall mushroom"
   ],
   "gifs": [],
@@ -221,5 +221,5 @@
   ],
   "vitesse": 115,
   "rotation": 7,
-  "updated_at": "2026-11-06T11:24:12.772Z"
+  "updated_at": "2026-11-06T12:33:18.561Z"
 }
