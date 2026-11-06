@@ -10,7 +10,7 @@
   "resolution": "auto",
   "res_w": 435,
   "res_h": 430,
-  "reload": 1793796779917,
+  "reload": 1793964252772,
   "ville": "Montpellier",
   "lat": 43.6108,
   "lon": 3.8767,
@@ -158,7 +158,7 @@
       "badge": "Info",
       "texte": "Ben est fatigué, c'est normal on est vendredi",
       "couleur": "rouge",
-      "actif": false
+      "actif": true
     },
     {
       "badge": "Trafic",
@@ -221,5 +221,5 @@
   ],
   "vitesse": 115,
   "rotation": 7,
-  "updated_at": "2026-11-04T12:52:59.917Z"
+  "updated_at": "2026-11-06T11:24:12.772Z"
 }
