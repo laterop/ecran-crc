@@ -10,7 +10,7 @@
   "resolution": "auto",
   "res_w": 435,
   "res_h": 430,
-  "reload": 1793968398561,
+  "reload": 1794208894798,
   "ville": "Montpellier",
   "lat": 43.6108,
   "lon": 3.8767,
@@ -158,7 +158,7 @@
       "badge": "Info",
       "texte": "Ben est fatigué, c'est normal on est vendredi",
       "couleur": "rouge",
-      "actif": true
+      "actif": false
     },
     {
       "badge": "Trafic",
@@ -188,13 +188,13 @@
       "badge": "/!\\",
       "texte": "Nous n'avons toujours pas d'ascenseur... Encore ",
       "couleur": "rouge",
-      "actif": true
+      "actif": false
     },
     {
       "badge": "Info",
       "texte": "Le cèpe ce n'est pas un arbre c'est un champignon",
       "couleur": "ambre",
-      "actif": true
+      "actif": false
     }
   ],
   "funfacts_perso": [
@@ -221,5 +221,5 @@
   ],
   "vitesse": 115,
   "rotation": 7,
-  "updated_at": "2026-11-06T12:33:18.561Z"
+  "updated_at": "2026-11-09T07:21:34.798Z"
 }
