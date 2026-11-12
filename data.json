@@ -10,7 +10,7 @@
   "resolution": "auto",
   "res_w": 435,
   "res_h": 430,
-  "reload": 1794226700962,
+  "reload": 1794466945988,
   "ville": "Montpellier",
   "lat": 43.6108,
   "lon": 3.8767,
@@ -66,8 +66,8 @@
   "giphy_cle": "MlDAk4EUP5vo423jtfpNHQMCRoY0H3Yk",
   "gif_themes": [
     "off",
-    "monday",
-    "Soupe",
+    "rain day",
+    "coffee",
     "cheminée",
     "Pain d'épice",
     "forest fall",
@@ -221,5 +221,5 @@
   ],
   "vitesse": 115,
   "rotation": 7,
-  "updated_at": "2026-11-09T12:18:20.962Z"
+  "updated_at": "2026-11-12T07:02:25.988Z"
 }
