@@ -10,7 +10,7 @@
   "resolution": "auto",
   "res_w": 435,
   "res_h": 430,
-  "reload": 1795611117026,
+  "reload": 1795611120519,
   "ville": "Montpellier",
   "lat": 43.6108,
   "lon": 3.8767,
@@ -235,5 +235,5 @@
   ],
   "vitesse": 115,
   "rotation": 7,
-  "updated_at": "2026-11-25T12:51:57.026Z"
+  "updated_at": "2026-11-25T12:52:00.519Z"
 }
