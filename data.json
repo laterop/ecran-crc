@@ -10,7 +10,7 @@
   "resolution": "auto",
   "res_w": 435,
   "res_h": 430,
-  "reload": 1795695227013,
+  "reload": 1795696420232,
   "ville": "Montpellier",
   "lat": 43.6108,
   "lon": 3.8767,
@@ -66,11 +66,11 @@
   "giphy_cle": "MlDAk4EUP5vo423jtfpNHQMCRoY0H3Yk",
   "gif_themes": [
     "off",
-    "rain day",
+    "Crepes",
     "coffee",
     "cheminée",
-    "Pain d'épice",
-    "forest fall",
+    "SNCF",
+    "MONTPELLIER",
     "fall mushroom"
   ],
   "gifs": [],
@@ -131,6 +131,10 @@
     {
       "prenom": "la sexy nana",
       "date": "02-10"
+    },
+    {
+      "prenom": "Denis",
+      "date": "12-11"
     }
   ],
   "anniv_avance": 30,
@@ -235,5 +239,5 @@
   ],
   "vitesse": 140,
   "rotation": 7,
-  "updated_at": "2026-11-26T12:13:47.013Z"
+  "updated_at": "2026-11-26T12:33:40.232Z"
 }
