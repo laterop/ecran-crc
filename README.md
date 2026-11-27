@@ -1,6 +1,6 @@
 # Écran CRC
 
-Widget d'affichage (10 styles : panneau LED, tableau de bord, quai de gare, terminal rétro, néon, clair, tableau à craie, journal, Méditerranée, rétro 80s) (horloge, météo, fête du jour, avancement de la semaine du lundi au samedi, messages, fun facts) avec une page d'admin.
+Widget d'affichage (10 styles : panneau LED, tableau de bord, quai de gare, terminal rétro, néon, clair, tableau à craie, journal, Méditerranée, rétro 80s, Noël) (horloge, météo, fête du jour, avancement de la semaine du lundi au samedi, messages, fun facts) avec une page d'admin.
 
 - `index.html` : l'écran, à ouvrir en plein écran sur le poste du CRC
 - `admin.html` : la page pour modifier ce qui s'affiche

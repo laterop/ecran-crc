@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Écran CRC</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Doto:wght@600;900&family=DotGothic16&family=Montserrat:wght@500;600;700;800&family=VT323&family=Oswald:wght@500;600&family=Rajdhani:wght@600;700&family=Inter:wght@500;700&family=Caveat:wght@600;700&family=Playfair+Display:wght@700;800&family=Josefin+Sans:wght@600;700&family=Orbitron:wght@600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Doto:wght@600;900&family=DotGothic16&family=Montserrat:wght@500;600;700;800&family=VT323&family=Oswald:wght@500;600&family=Rajdhani:wght@600;700&family=Inter:wght@500;700&family=Caveat:wght@600;700&family=Playfair+Display:wght@700;800&family=Josefin+Sans:wght@600;700&family=Orbitron:wght@600;800&family=Nunito:wght@700;900&family=Mountains+of+Christmas:wght@700&display=swap" rel="stylesheet">
 <style>
   /* ================= Styles ================= */
   :root{ --k:1; --u:calc(var(--k) * 1cqmin) }
@@ -50,6 +50,11 @@
     --ambre:#ffc66b; --vert:#7fe0c4; --rouge:#ff8a7a; --blanc:#fdf6e7; --bleu:#9fe3ff; --off:#155d82;
     --font:'Josefin Sans',system-ui,sans-serif; --weight:700; --case:uppercase; --track:.05em;
     --glow:none; --overlay:none; }
+  body.th-noel{ --bg:#0f2a1d; --panel:#143825; --sep:#2c5a3e; --ink:#fff8ec; --dim:#b9d4c0;
+    --ambre:#ffcf4a; --vert:#7ee08a; --rouge:#ff5a5f; --blanc:#fff8ec; --bleu:#9fd8ff; --off:#1f4a32;
+    --font:'Nunito',system-ui,sans-serif; --weight:900; --case:none; --track:0;
+    --glow:0 0 .2em color-mix(in srgb,currentColor 35%,transparent);
+    --overlay:radial-gradient(circle at 50% 0%,rgba(255,207,74,.10),transparent 60%); --overlay-size:auto; }
   body.th-retro{ --bg:#14052b; --panel:#1d0a3d; --sep:#5b1f8f; --ink:#ffe9fb; --dim:#b18ad6;
     --ambre:#ffb347; --vert:#2de2e6; --rouge:#ff3864; --blanc:#ffe9fb; --bleu:#9b7bff; --off:#3a1863;
     --font:'Orbitron',system-ui,sans-serif; --weight:800; --case:uppercase; --track:.06em;
@@ -96,6 +101,30 @@
   body.th-craie .badge{border-style:solid;border-radius:40% 8% 40% 8% / 12% 40% 12% 40%}
   body.th-craie.lay-liste .row{border-style:dashed!important}
   body.th-clair .row,body.th-clair .head{box-shadow:0 1px 3px rgba(16,24,40,.06)}
+  /* ---- Noël ---- */
+  body.th-noel .board{background:radial-gradient(120% 80% at 50% 0%,#1d4a31,var(--bg) 70%)}
+  body.th-noel .big .h,body.th-noel .lay-liste .clock,body.th-noel.lay-liste .clock{font-family:'Mountains of Christmas',cursive;font-weight:700}
+  body.th-noel .badge{background:repeating-linear-gradient(-45deg,#e8373e 0 .35em,#fff8ec .35em .7em);border:0;padding-left:.9em;padding-right:.9em}
+  body.th-noel .badge span{background:#0f2a1d;color:#fff8ec;padding:.1em .5em;border-radius:.3em;display:inline-block}
+  body.th-noel .bar i.on{background:repeating-linear-gradient(-45deg,#e8373e 0 4px,#fff8ec 4px 8px);box-shadow:none}
+  body.th-noel .days b.now{background:var(--rouge);border-color:var(--rouge);color:#fff}
+  body.th-noel .ticker .lab{background:var(--rouge);color:#fff}
+  .noel-deco{display:none}
+  body.th-noel .noel-deco{display:block;position:absolute;inset:0;pointer-events:none;z-index:8;overflow:hidden}
+  .guirlande{position:absolute;left:0;right:0;top:0;height:calc(var(--u)*5);display:flex;justify-content:space-around;align-items:flex-start}
+  .guirlande::before{content:"";position:absolute;left:-2%;right:-2%;top:calc(var(--u)*-1.6);height:calc(var(--u)*3);border-bottom:2px solid #2b4a37;border-radius:0 0 50% 50%/0 0 100% 100%}
+  .guirlande i{position:relative;margin-top:calc(var(--u)*.9);width:calc(var(--u)*1.3);height:calc(var(--u)*2);border-radius:50% 50% 45% 45%;animation:bulle 1.6s ease-in-out infinite}
+  .guirlande i::before{content:"";position:absolute;left:25%;right:25%;top:-22%;height:28%;background:#4a5a50;border-radius:2px}
+  .guirlande i:nth-child(4n+1){background:#ff4d4f;color:#ff4d4f}
+  .guirlande i:nth-child(4n+2){background:#ffcf4a;color:#ffcf4a;animation-delay:.4s}
+  .guirlande i:nth-child(4n+3){background:#5ee07a;color:#5ee07a;animation-delay:.8s}
+  .guirlande i:nth-child(4n+4){background:#6bc7ff;color:#6bc7ff;animation-delay:1.2s}
+  .guirlande i:nth-child(odd){margin-top:calc(var(--u)*1.6)}
+  @keyframes bulle{0%,100%{opacity:1;box-shadow:0 0 calc(var(--u)*1.4) currentColor}50%{opacity:.35;box-shadow:none}}
+  .flocon{position:absolute;top:-5%;color:#fff;opacity:.85;line-height:1;animation:tombe linear infinite;will-change:transform}
+  @keyframes tombe{to{transform:translate3d(var(--dx),110cqh,0) rotate(360deg)}}
+  body.th-noel.lay-carrousel .board{padding-top:calc(var(--u)*6)}
+  body.th-noel.lay-liste .board{padding-top:calc(var(--u)*5.5)}
   body.th-retro .big .h{background:linear-gradient(180deg,#ffe36e,#ff3864);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:none}
   body.th-dash .badge{background:color-mix(in srgb,currentColor 20%,transparent)}
   body.th-dash .badge span{color:inherit}
@@ -212,6 +241,7 @@
 </head>
 <body class="th-led lay-liste">
 <div class="stage" id="stage">
+  <div class="noel-deco" aria-hidden="true"><div class="guirlande" id="guirlande"></div><div id="neige"></div></div>
   <div class="board">
     <div class="head">
       <div class="t glow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="14" rx="2"/><path d="M8 22h8M12 18v4"/></svg><span class="name" id="titreTxt">CRC</span><span class="sub" id="date"></span></div>
@@ -357,7 +387,17 @@ function tick(){
 }
 
 /* ---------- Mise en page : style, taille, résolution ---------- */
-const STYLES = ["led","dash","gare","term","neon","clair","craie","journal","med","retro"];
+const STYLES = ["led","dash","gare","term","neon","clair","craie","journal","med","retro","noel"];
+function decoNoel(){
+  const g = $('guirlande'), n = $('neige');
+  if(!g || g.childElementCount) return;
+  g.innerHTML = "<i></i>".repeat(18);
+  n.innerHTML = Array.from({length:36},()=>{
+    const t = 6 + Math.random()*9, size = 0.8 + Math.random()*1.8;
+    return `<span class="flocon" style="left:${Math.random()*100}%;font-size:calc(var(--u)*${size.toFixed(2)});animation-duration:${t.toFixed(1)}s;animation-delay:-${(Math.random()*t).toFixed(1)}s;--dx:${(Math.random()*12-6).toFixed(1)}cqw;opacity:${(.4+Math.random()*.5).toFixed(2)}">${Math.random()<.5?"❄":"•"}</span>`;
+  }).join("");
+}
+decoNoel();
 function layout(){
   const st = $('stage');
   let W = innerWidth, H = innerHeight, sc = 1;
