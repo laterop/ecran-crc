@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Admin écran CRC</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Doto:wght@900&family=Inter:wght@400;500;600;700&family=Oswald:wght@600&family=VT323&family=Rajdhani:wght@700&family=Montserrat:wght@700&family=Caveat:wght@700&family=Playfair+Display:wght@800&family=Josefin+Sans:wght@700&family=Orbitron:wght@800&family=Nunito:wght@900&family=Mountains+of+Christmas:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Doto:wght@900&family=Inter:wght@400;500;600;700&family=Oswald:wght@600&family=VT323&family=Rajdhani:wght@700&family=Montserrat:wght@700&family=Caveat:wght@700&family=Playfair+Display:wght@800&family=Josefin+Sans:wght@700&family=Orbitron:wght@800&family=Nunito:wght@900&family=Mountains+of+Christmas:wght@700&family=Cinzel:wght@700&family=Fredoka:wght@700&display=swap" rel="stylesheet">
 <style>
   :root{--bg:#0b0b0c;--card:#141416;--line:#26262a;--ink:#f2efe6;--dim:#9a978f;--ambre:#ffb21e;--vert:#48ff72;--rouge:#ff3d3d;--bleu:#3fb8ff;--blanc:#f2efe6}
   *{box-sizing:border-box;margin:0;padding:0}
@@ -412,7 +412,11 @@ const STYLES = [
   {id:"journal", nom:"Journal", desc:"Papier crème, titres à empattements", bg:"#f3ecdc", c:"#a3361f", c2:"#1a1714", f:"'Playfair Display',serif"},
   {id:"med", nom:"Méditerranée", desc:"Bleu mer et sable chaud", bg:"#0e4a6e", c:"#ffc66b", c2:"#fdf6e7", f:"'Josefin Sans',sans-serif", up:true},
   {id:"retro", nom:"Rétro 80s", desc:"Synthwave, grille et dégradé", bg:"#14052b", c:"#ffb347", c2:"#2de2e6", f:"Orbitron,sans-serif", up:true},
-  {id:"noel", nom:"Noël 🎄", desc:"Neige, guirlande et sucre d'orge", bg:"#0f2a1d", c:"#ffcf4a", c2:"#fff8ec", f:"Nunito,sans-serif"}
+  {id:"noel", nom:"Noël sapin 🎄", desc:"Neige, guirlande et sucre d'orge", bg:"#0f2a1d", c:"#ffcf4a", c2:"#fff8ec", f:"Nunito,sans-serif"},
+  {id:"noelneige", nom:"Noël enneigé ☃️", desc:"Blanc glacé, rouge et guirlande", bg:"#e9f2fa", c:"#d62839", c2:"#12324f", f:"Nunito,sans-serif"},
+  {id:"noelchic", nom:"Noël chic ✨", desc:"Noir et or, paillettes qui scintillent", bg:"#0b0b0d", c:"#d9b55a", c2:"#f5efe0", f:"Cinzel,serif"},
+  {id:"pull", nom:"Pull moche 🧶", desc:"Tricot rouge, bande jacquard, coutures", bg:"#b3202a", c:"#ffffff", c2:"#ffe08a", f:"Fredoka,sans-serif"},
+  {id:"epices", nom:"Pain d'épices 🍪", desc:"Biscuit chaud et glaçage blanc", bg:"#5a3420", c:"#fffaf0", c2:"#ffd27a", f:"Fredoka,sans-serif"}
 ];
 function drawStyles(){
   $('styles').innerHTML = STYLES.map(x=>`<button type="button" class="sty ${S.style===x.id?'on':''}" data-st="${x.id}">

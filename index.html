@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Écran CRC</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Doto:wght@600;900&family=DotGothic16&family=Montserrat:wght@500;600;700;800&family=VT323&family=Oswald:wght@500;600&family=Rajdhani:wght@600;700&family=Inter:wght@500;700&family=Caveat:wght@600;700&family=Playfair+Display:wght@700;800&family=Josefin+Sans:wght@600;700&family=Orbitron:wght@600;800&family=Nunito:wght@700;900&family=Mountains+of+Christmas:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Doto:wght@600;900&family=DotGothic16&family=Montserrat:wght@500;600;700;800&family=VT323&family=Oswald:wght@500;600&family=Rajdhani:wght@600;700&family=Inter:wght@500;700&family=Caveat:wght@600;700&family=Playfair+Display:wght@700;800&family=Josefin+Sans:wght@600;700&family=Orbitron:wght@600;800&family=Nunito:wght@700;900&family=Mountains+of+Christmas:wght@700&family=Cinzel:wght@600;700&family=Fredoka:wght@600;700&display=swap" rel="stylesheet">
 <style>
   /* ================= Styles ================= */
   :root{ --k:1; --u:calc(var(--k) * 1cqmin) }
@@ -55,6 +55,22 @@
     --font:'Nunito',system-ui,sans-serif; --weight:900; --case:none; --track:0;
     --glow:0 0 .2em color-mix(in srgb,currentColor 35%,transparent);
     --overlay:radial-gradient(circle at 50% 0%,rgba(255,207,74,.10),transparent 60%); --overlay-size:auto; }
+  body.th-noelneige{ --bg:#e9f2fa; --panel:#ffffff; --sep:#d3e3f1; --ink:#12324f; --dim:#5f7d98;
+    --ambre:#c7891a; --vert:#1f7a4a; --rouge:#d62839; --blanc:#12324f; --bleu:#2f6fb5; --off:#dbe7f2;
+    --font:'Nunito',system-ui,sans-serif; --weight:900; --case:none; --track:0; --flocon:#8fb8de;
+    --glow:none; --overlay:none; }
+  body.th-noelchic{ --bg:#0b0b0d; --panel:#131316; --sep:#3a3220; --ink:#f5efe0; --dim:#a8997a;
+    --ambre:#d9b55a; --vert:#c9d7a7; --rouge:#e5a1a1; --blanc:#f5efe0; --bleu:#c9d6e8; --off:#2a2518;
+    --font:'Cinzel',Georgia,serif; --weight:700; --case:none; --track:.04em; --flocon:#d9b55a;
+    --glow:0 0 .25em rgba(217,181,90,.35); --overlay:none; }
+  body.th-pull{ --bg:#b3202a; --panel:#9a1a23; --sep:#d7464f; --ink:#fff6e9; --dim:#ffd1cc;
+    --ambre:#ffe08a; --vert:#a8f0b5; --rouge:#ffffff; --blanc:#fff6e9; --bleu:#bfe6ff; --off:#7d141b;
+    --font:'Fredoka',system-ui,sans-serif; --weight:700; --case:none; --track:.01em; --flocon:#ffffff;
+    --glow:none; --overlay:none; }
+  body.th-epices{ --bg:#5a3420; --panel:#6c3f27; --sep:#8b5a3a; --ink:#fff3e0; --dim:#e8c9a8;
+    --ambre:#ffd27a; --vert:#a6dd8f; --rouge:#ff8a7a; --blanc:#fff3e0; --bleu:#bfe3ff; --off:#4a2a19;
+    --font:'Fredoka',system-ui,sans-serif; --weight:700; --case:none; --track:0; --flocon:#fffaf0;
+    --glow:none; --overlay:none; }
   body.th-retro{ --bg:#14052b; --panel:#1d0a3d; --sep:#5b1f8f; --ink:#ffe9fb; --dim:#b18ad6;
     --ambre:#ffb347; --vert:#2de2e6; --rouge:#ff3864; --blanc:#ffe9fb; --bleu:#9b7bff; --off:#3a1863;
     --font:'Orbitron',system-ui,sans-serif; --weight:800; --case:uppercase; --track:.06em;
@@ -110,7 +126,7 @@
   body.th-noel .days b.now{background:var(--rouge);border-color:var(--rouge);color:#fff}
   body.th-noel .ticker .lab{background:var(--rouge);color:#fff}
   .noel-deco{display:none}
-  body.th-noel .noel-deco{display:block;position:absolute;inset:0;pointer-events:none;z-index:8;overflow:hidden}
+  body.deco .noel-deco{display:block;position:absolute;inset:0;pointer-events:none;z-index:8;overflow:hidden}
   .guirlande{position:absolute;left:0;right:0;top:0;height:calc(var(--u)*5);display:flex;justify-content:space-around;align-items:flex-start}
   .guirlande::before{content:"";position:absolute;left:-2%;right:-2%;top:calc(var(--u)*-1.6);height:calc(var(--u)*3);border-bottom:2px solid #2b4a37;border-radius:0 0 50% 50%/0 0 100% 100%}
   .guirlande i{position:relative;margin-top:calc(var(--u)*.9);width:calc(var(--u)*1.3);height:calc(var(--u)*2);border-radius:50% 50% 45% 45%;animation:bulle 1.6s ease-in-out infinite}
@@ -121,10 +137,68 @@
   .guirlande i:nth-child(4n+4){background:#6bc7ff;color:#6bc7ff;animation-delay:1.2s}
   .guirlande i:nth-child(odd){margin-top:calc(var(--u)*1.6)}
   @keyframes bulle{0%,100%{opacity:1;box-shadow:0 0 calc(var(--u)*1.4) currentColor}50%{opacity:.35;box-shadow:none}}
-  .flocon{position:absolute;top:-5%;color:#fff;opacity:.85;line-height:1;animation:tombe linear infinite;will-change:transform}
+  .guirlande,.tricot{display:none}
+  body.deco-guirlande .guirlande{display:flex}
+  body.deco-tricot .tricot{display:block}
+  .flocon{position:absolute;top:-5%;color:var(--flocon,#fff);opacity:.85;line-height:1;animation:tombe linear infinite;will-change:transform}
   @keyframes tombe{to{transform:translate3d(var(--dx),110cqh,0) rotate(360deg)}}
-  body.th-noel.lay-carrousel .board{padding-top:calc(var(--u)*6)}
-  body.th-noel.lay-liste .board{padding-top:calc(var(--u)*5.5)}
+  body.deco-haut.lay-carrousel .board{padding-top:calc(var(--u)*6)}
+  body.deco-haut.lay-liste .board{padding-top:calc(var(--u)*5.5)}
+  .tricot{position:absolute;left:0;right:0;top:0;height:calc(var(--u)*4.2);
+    background:
+      linear-gradient(135deg,#fff 25%,transparent 25%) calc(var(--u)*-1) calc(var(--u)*1.2)/calc(var(--u)*2.4) calc(var(--u)*2.4) repeat-x,
+      linear-gradient(225deg,#fff 25%,transparent 25%) calc(var(--u)*-1) calc(var(--u)*1.2)/calc(var(--u)*2.4) calc(var(--u)*2.4) repeat-x,
+      radial-gradient(circle,#fff 30%,transparent 32%) 0 calc(var(--u)*.2)/calc(var(--u)*2.4) calc(var(--u)*1) repeat-x,
+      #1e6b3a;
+    border-bottom:calc(var(--u)*.5) solid #fff}
+  .paillette{position:absolute;color:var(--flocon);animation:brille ease-in-out infinite;line-height:1}
+  @keyframes brille{0%,100%{opacity:0;transform:scale(.4) rotate(0)}50%{opacity:1;transform:scale(1) rotate(45deg)}}
+
+  /* ---- Noël enneigé ---- */
+  body.th-noelneige .board{background:linear-gradient(180deg,#f6fafd,#dfeaf5)}
+  body.th-noelneige .badge{background:var(--rouge);border-color:var(--rouge);border-radius:999px}
+  body.th-noelneige .badge span{color:#fff}
+  body.th-noelneige .row,body.th-noelneige .lay-liste .head{box-shadow:0 2px 6px rgba(18,50,79,.08)}
+  body.th-noelneige .big .h,body.th-noelneige .clock{font-family:'Mountains of Christmas',cursive;color:var(--rouge)}
+  body.th-noelneige .bar i.on{background:var(--rouge);box-shadow:none}
+  body.th-noelneige .ticker .lab{background:var(--vert);color:#fff}
+  body.th-noelneige .guirlande::before{border-color:#7a96ae}
+
+  /* ---- Noël chic, noir et or ---- */
+  body.th-noelchic .board{background:radial-gradient(90% 70% at 50% 0%,#1d1a12,var(--bg) 70%)}
+  body.th-noelchic .badge{border-width:1px;border-color:var(--ambre);color:var(--ambre);border-radius:0;letter-spacing:.18em;text-transform:uppercase}
+  body.th-noelchic .badge span{color:var(--ambre);font-size:.85em}
+  body.th-noelchic .row{border-color:#2b2618!important}
+  body.th-noelchic .big .h{color:var(--ambre);letter-spacing:.06em}
+  body.th-noelchic .bar i{border-radius:0}
+  body.th-noelchic .bar i.on{background:linear-gradient(180deg,#f3d98b,#b88a2c);box-shadow:0 0 .4em rgba(217,181,90,.5)}
+  body.th-noelchic .ticker .lab{background:transparent;color:var(--ambre);border-right:1px solid var(--ambre);letter-spacing:.15em;text-transform:uppercase}
+  body.th-noelchic .days b.now{background:var(--ambre);color:#0b0b0d}
+
+  /* ---- Pull moche ---- */
+  body.th-pull .board{background:
+    radial-gradient(circle,rgba(255,255,255,.08) 18%,transparent 20%) 0 0/calc(var(--u)*3) calc(var(--u)*3),
+    repeating-linear-gradient(90deg,rgba(0,0,0,.06) 0 calc(var(--u)*.6),transparent calc(var(--u)*.6) calc(var(--u)*1.2)),
+    var(--bg)}
+  body.th-pull .row,body.th-pull .screen,body.th-pull .lay-liste .head{border:calc(var(--u)*.35) dashed rgba(255,255,255,.55)!important}
+  body.th-pull .badge{background:#1e6b3a;border-color:#fff;border-radius:999px}
+  body.th-pull .badge span{color:#fff}
+  body.th-pull .big .h{color:#fff;text-shadow:calc(var(--u)*.4) calc(var(--u)*.4) 0 #1e6b3a}
+  body.th-pull .bar i.on{background:#fff;box-shadow:none}
+  body.th-pull .bar i{background:#7d141b}
+  body.th-pull .ticker .lab{background:#1e6b3a;color:#fff}
+  body.th-pull .days b.now{background:#fff;color:#b3202a;border-color:#fff}
+
+  /* ---- Pain d'épices ---- */
+  body.th-epices .board{background:radial-gradient(110% 80% at 50% 0%,#7a4a2c,var(--bg) 70%)}
+  body.th-epices .badge{background:#fffaf0;border:0;border-radius:999px;box-shadow:0 0 0 calc(var(--u)*.35) #fffaf0, 0 0 0 calc(var(--u)*.7) #e2483d}
+  body.th-epices .badge span{color:#5a3420}
+  body.th-epices .row{border:calc(var(--u)*.3) dotted rgba(255,250,240,.6)!important;border-radius:calc(var(--u)*1.6)}
+  body.th-epices .big .h{color:#fffaf0;text-shadow:0 calc(var(--u)*.35) 0 #3d2213}
+  body.th-epices .bar i{border-radius:999px}
+  body.th-epices .bar i.on{background:#fffaf0;box-shadow:none}
+  body.th-epices .ticker .lab{background:#e2483d;color:#fff}
+  body.th-epices .days b.now{background:#e2483d;border-color:#e2483d;color:#fff}
   body.th-retro .big .h{background:linear-gradient(180deg,#ffe36e,#ff3864);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:none}
   body.th-dash .badge{background:color-mix(in srgb,currentColor 20%,transparent)}
   body.th-dash .badge span{color:inherit}
@@ -241,7 +315,7 @@
 </head>
 <body class="th-led lay-liste">
 <div class="stage" id="stage">
-  <div class="noel-deco" aria-hidden="true"><div class="guirlande" id="guirlande"></div><div id="neige"></div></div>
+  <div class="noel-deco" aria-hidden="true"><div class="tricot"></div><div class="guirlande" id="guirlande"></div><div id="neige"></div></div>
   <div class="board">
     <div class="head">
       <div class="t glow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="14" rx="2"/><path d="M8 22h8M12 18v4"/></svg><span class="name" id="titreTxt">CRC</span><span class="sub" id="date"></span></div>
@@ -387,17 +461,27 @@ function tick(){
 }
 
 /* ---------- Mise en page : style, taille, résolution ---------- */
-const STYLES = ["led","dash","gare","term","neon","clair","craie","journal","med","retro","noel"];
-function decoNoel(){
+const STYLES = ["led","dash","gare","term","neon","clair","craie","journal","med","retro","noel","noelneige","noelchic","pull","epices"];
+const DECOS = { noel:["guirlande","neige"], noelneige:["guirlande","neige"], noelchic:["paillettes"], pull:["tricot","neige"], epices:["guirlande","neige"] };
+let DECO_TYPE = "";
+function decoNoel(type){
   const g = $('guirlande'), n = $('neige');
-  if(!g || g.childElementCount) return;
-  g.innerHTML = "<i></i>".repeat(18);
-  n.innerHTML = Array.from({length:36},()=>{
-    const t = 6 + Math.random()*9, size = 0.8 + Math.random()*1.8;
-    return `<span class="flocon" style="left:${Math.random()*100}%;font-size:calc(var(--u)*${size.toFixed(2)});animation-duration:${t.toFixed(1)}s;animation-delay:-${(Math.random()*t).toFixed(1)}s;--dx:${(Math.random()*12-6).toFixed(1)}cqw;opacity:${(.4+Math.random()*.5).toFixed(2)}">${Math.random()<.5?"❄":"•"}</span>`;
-  }).join("");
+  if(!g) return;
+  if(!g.childElementCount) g.innerHTML = "<i></i>".repeat(18);
+  if(type === DECO_TYPE) return;
+  DECO_TYPE = type;
+  if(type === "paillettes"){
+    n.innerHTML = Array.from({length:26},()=>{
+      const t = 2.5 + Math.random()*4;
+      return `<span class="paillette" style="left:${(Math.random()*98).toFixed(1)}%;top:${(Math.random()*96).toFixed(1)}%;font-size:calc(var(--u)*${(0.8+Math.random()*1.6).toFixed(2)});animation-duration:${t.toFixed(1)}s;animation-delay:-${(Math.random()*t).toFixed(1)}s">${Math.random()<.6?"✦":"✧"}</span>`;
+    }).join("");
+  }else if(type === "neige"){
+    n.innerHTML = Array.from({length:36},()=>{
+      const t = 6 + Math.random()*9, size = 0.8 + Math.random()*1.8;
+      return `<span class="flocon" style="left:${Math.random()*100}%;font-size:calc(var(--u)*${size.toFixed(2)});animation-duration:${t.toFixed(1)}s;animation-delay:-${(Math.random()*t).toFixed(1)}s;--dx:${(Math.random()*12-6).toFixed(1)}cqw;opacity:${(.4+Math.random()*.5).toFixed(2)}">${Math.random()<.5?"❄":"•"}</span>`;
+    }).join("");
+  }else n.innerHTML = "";
 }
-decoNoel();
 function layout(){
   const st = $('stage');
   let W = innerWidth, H = innerHeight, sc = 1;
@@ -413,6 +497,11 @@ function layout(){
   const style = STYLES.includes(S.style) ? S.style : "led";
   const b = document.body;
   b.className = `th-${style} lay-${LAY}` + (S.cadre!==false ? " cadre" : "") + (S.horloge===false ? " sans-horloge" : "") + (S.entete===false ? " sans-entete" : "") + (PREVIEW ? " preview" : "");
+  const deco = DECOS[style] || [];
+  if(deco.length){
+    b.className += " deco " + deco.map(x => "deco-"+x).join(" ") + (deco.some(x => x==="guirlande" || x==="tricot") ? " deco-haut" : "");
+    decoNoel(deco.includes("paillettes") ? "paillettes" : deco.includes("neige") ? "neige" : "");
+  }
   b.style.setProperty('--k', Math.max(.5, Math.min(2, (+S.taille||100)/100)));
   window.__W = W;
 }
